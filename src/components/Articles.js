@@ -1,6 +1,6 @@
 import React from 'react'
-import HorizontalList from './HorizontalList'
-import VerticalList from './VerticalList'
+import HorizontalList from './lists/HorizontalList'
+import VerticalList from './lists/VerticalList'
 
 const Articles = ({ data }) => {
     return (

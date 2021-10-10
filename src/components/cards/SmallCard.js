@@ -1,13 +1,14 @@
 import React from 'react'
 import { StyleSheet, Dimensions } from 'react-native'
-import Card from './Card'
+import Card from '../cards/Card'
 
 const { width } = Dimensions.get('window');
 
-const SmallCard = ({item}) => {
+const SmallCard = ({item, onPress}) => {
     return (
         <Card
         item={item} 
+        onPress={onPress}
         style={styles.container}
         imageStyle={styles.image}
         />
