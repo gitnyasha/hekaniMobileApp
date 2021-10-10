@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 
-const FormSelect = ({title, backgroundColor, style}) => {
+const FormSelect = ({title, backgroundColor, style, onPress}) => {
     return (
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.container, style, {backgroundColor}]}>
                 <Text style={styles.title}>{title}</Text>
             </View>

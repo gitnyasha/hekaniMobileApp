@@ -1,23 +1,17 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
+import FormContainer from './FormContainer'
+import FormInput from './FormInput'
+import FormButton from './FormButton'
 
 const LoginForm = () => {
     return (
-        <View style={styles.container}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: "#fff" }}>
-            Login
-          </Text>
-        </View>
+        <FormContainer>
+            <FormInput title="Email" placeholder="Enter email" />
+            <FormInput title="Password" placeholder="Enter password" />
+            <FormButton title="Login" />
+        </FormContainer>
     )
 }
-
-const styles = StyleSheet.create({
-    container = { 
-        width: Dimensions.get('window').width, 
-        justifyContent: "center", 
-        alignItems: "center", 
-        backgroundColor: "navy" 
-    }
-})
 
 export default LoginForm
