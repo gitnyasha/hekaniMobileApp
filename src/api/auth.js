@@ -1,24 +1,22 @@
-import axios from "axios";
+import server from './server'
 
-const auth = async () => {
-    axios.post(
-        "https://hekani-social-media.herokuapp.com/sessions", 
-        {
-            user: {
-                email: this.state.email,
-                password: this.state.password
-            }
+const register = async (values) => {
+    const response = await server.post(
+        `/registrations`,
+        { 
+            withCredentials: true 
         },
-        { withCredentials: true },
-        {headers: { 'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com' },}
-    ).then(response => {
-        if (response.data.logged_in) {
-            this.handleSuccess(response.data);
+        {
+            headers: { 
+                'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com' 
+            },
+        }, 
+        {
+            ...values
         }
-        console.log(response);
-    }).catch(error => {
-        console.log(error);
-    });
+    );
 }
 
-export default auth;
+export default {
+    register
+};
