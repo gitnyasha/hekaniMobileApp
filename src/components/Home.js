@@ -5,6 +5,7 @@ import articlesApi from '../api/articlesApi';
 import Articles from './Articles';
 import Featured from './Featured';
 import SearchBar from './SearchBar';
+import ActivityIndicator from './extras/ActivityIndicator';
 
 const Home = () => {
   const [articles, setArticles] = useState([]);
@@ -28,12 +29,12 @@ const Home = () => {
     <Screen>
      
       {isLoading ? (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Loading...</Text>
-      </View>
+        <View>
+            <ActivityIndicator visible={true}/>
+        </View>
       ) : (
         <>
-          {/* <SearchBar /> */}
+          <SearchBar />
           <Featured
             title="Featured"
             item = {{ 
