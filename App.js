@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import Navigation from './src/components/nav/Navigation';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './src/components/Home'
+import Article from './src/components/Article'
 import axios from 'axios';
-import { View } from 'react-native';
 import Authenticate from './src/components/Authenticate';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [cookies, setCookies] = useState({
@@ -51,9 +54,37 @@ export default function App() {
 
 
   return (
-    // <NavigationContainer>
-    //   <Navigation handleLogin={handleLogin} />
-    // </NavigationContainer>
-    <Authenticate handleLogin={handleLogin} isLoggedIn={cookies.isLoggedIn} handleLogout={handleLogout} />
+    <>
+    {cookies.isLoggedIn === "Yes" ? (
+    <NavigationContainer>
+      <Stack.Navigator
+            screenOptions={{
+                headerTransparent: true,
+                headerTitle: '',
+
+            }}
+        >          
+            <><Stack.Screen options={{ headerShown: false }} name="Home">
+            {props => <Home handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
+          </Stack.Screen><Stack.Screen name="Article">
+              {props => <Article handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
+            </Stack.Screen></>
+      </Stack.Navigator>
+    </NavigationContainer>
+    ) : (
+      <NavigationContainer>
+        <Stack.Navigator
+              screenOptions={{
+                  headerTransparent: true,
+                  headerTitle: '',
+              }}
+          >
+              <Stack.Screen name="Authenticate">
+                {props => <Authenticate handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
+              </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    )}
+    </>
   );
 }

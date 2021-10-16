@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, TouchableWithoutFeedback } from 'react-native'
 import Screen from './Screen';
 import articlesApi from '../api/articlesApi';
 import Articles from './Articles';
@@ -8,7 +8,7 @@ import SearchBar from './SearchBar';
 import ActivityIndicator from './extras/ActivityIndicator';
 import { useNavigation } from '@react-navigation/native'
 
-const Home = (props) => {
+const Home = ({ handleLogin, isLoggedIn, handleLogout }) => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
@@ -37,8 +37,8 @@ const Home = (props) => {
       ) : (
         <>
           <SearchBar />
-          <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 20}}>Status: {props.isLoggedIn}</Text>
-          <Button title="Authentication" onPress={() => navigation.navigate("Authenticate")} />
+          {isLoggedIn === "Yes" ? <Button title="LOGOUT" onPress={handleLogoutButton} /> : <Text>You are not logged in</Text>}
+          
           <Featured
             title="Featured"
             item = {{ 

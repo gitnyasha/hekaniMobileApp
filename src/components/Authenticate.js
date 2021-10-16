@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const width = Dimensions.get('window').width;
 
-const Authenticate = ({handleLogin, isLoggedIn, handleLogout}) => {
+const Authenticate = ({ handleLogin, isLoggedIn, handleLogout }) => {
 
     handleLogoutButton = () => {
         axios.delete("https://hekani-social-media.herokuapp.com/logout", {withCredentials: true})
@@ -24,7 +24,6 @@ const Authenticate = ({handleLogin, isLoggedIn, handleLogout}) => {
 
     return (
          <View style={{ flex: 1, paddingTop: 80 }}>
-             {isLoggedIn === "Yes" ? <TouchableWithoutFeedback onPress={handleLogoutButton}><Text>Logout</Text></TouchableWithoutFeedback> : <Text>You are not logged in</Text>}
             <View style={{ height: 100}}>
                 <FormHeader leftHeading='Left' rightHeading="Right" />
             </View>

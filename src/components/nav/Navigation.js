@@ -6,7 +6,7 @@ import Authenticate from '../Authenticate'
 
 const Stack = createNativeStackNavigator();
 
-const Navigation = ({handleLogin}) => {
+const Navigation = ({ handleLogin, handleLogout, isLoggedIn }) => {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -16,8 +16,8 @@ const Navigation = ({handleLogin}) => {
             }}
         >
             <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
-            <Stack.Screen name="Article" component={Article} />
-            <Stack.Screen handleLogin={handleLogin} name="Authenticate" component={Authenticate} />
+            <Stack.Screen name="Article" component={Article} initialParams={{ handleLogin, handleLogout, isLoggedIn }} />
+            <Stack.Screen name="Authenticate" component={Authenticate} initialParams={{ handleLogin, handleLogout, isLoggedIn }} />
         </Stack.Navigator>
     )
 }
