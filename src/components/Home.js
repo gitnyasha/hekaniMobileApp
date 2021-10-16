@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import Screen from './Screen';
 import articlesApi from '../api/articlesApi';
 import Articles from './Articles';
 import Featured from './Featured';
 import SearchBar from './SearchBar';
 import ActivityIndicator from './extras/ActivityIndicator';
+import { useNavigation } from '@react-navigation/native'
 
-const Home = () => {
+const Home = (props) => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
       const fetchArticles = async () => {
@@ -35,6 +37,8 @@ const Home = () => {
       ) : (
         <>
           <SearchBar />
+          <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 20}}>Status: {props.isLoggedIn}</Text>
+          <Button title="Authentication" onPress={() => navigation.navigate("Authenticate")} />
           <Featured
             title="Featured"
             item = {{ 

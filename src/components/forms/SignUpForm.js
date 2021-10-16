@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import FormContainer from './FormContainer'
 import FormInput from './FormInput'
 import FormButton from './FormButton'
@@ -17,7 +17,7 @@ const isValidEmail = (value) => {
     return regex.test(value)
 }
 
-const SignUpForm = () => {
+const SignUpForm = ({handleLogin}) => {
     const [ user, setUser ] = useState({
         email: '',
         password: '',
@@ -42,11 +42,13 @@ const SignUpForm = () => {
             { withCredentials: true },
             {headers: { 'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com'},} 
         ).then(response => {
+            console.log(response.data);
+
             if (response.data.status === "created") {
-                this.handleSuccess(response.data);
+                handleLogin(response.data);
             }
         }).catch(error => {
-            console.log(error);
+            console.log("Error ", error);
         });
     }
 

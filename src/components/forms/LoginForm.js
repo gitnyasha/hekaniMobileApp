@@ -17,7 +17,7 @@ const isValidEmail = (value) => {
     return regex.test(value)
 }
 
-const LoginForm = () => {
+const LoginForm = ({handleLogin}) => {
     const [ user, setUser ] = useState({
         email: '',
         password: '',
@@ -45,11 +45,10 @@ const LoginForm = () => {
                 },
             }
         ).then(response => {
-            // if (response.data.logged_in) {
-            //     handleLogin(response.data);
-            // }
-            console.log(response.data);
 
+            if (response.data.logged_in) {
+                handleLogin(response.data);
+            }
         }).catch(error => {
             console.log(error);
         });

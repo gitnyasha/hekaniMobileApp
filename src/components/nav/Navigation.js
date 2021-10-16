@@ -2,10 +2,11 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../Home'
 import Article from '../Article'
+import Authenticate from '../Authenticate'
 
 const Stack = createNativeStackNavigator();
 
-const Navigation = () => {
+const Navigation = ({handleLogin}) => {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -16,6 +17,7 @@ const Navigation = () => {
         >
             <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
             <Stack.Screen name="Article" component={Article} />
+            <Stack.Screen handleLogin={handleLogin} name="Authenticate" component={Authenticate} />
         </Stack.Navigator>
     )
 }
