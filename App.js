@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './src/components/Home'
-import Article from './src/components/Article'
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import axios from 'axios';
-import Authenticate from './src/components/Authenticate';
+import Navigation from './src/components/nav/Navigation';
+import Questions from './src/components/Questions';
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   const [cookies, setCookies] = useState({
@@ -54,37 +53,17 @@ export default function App() {
 
 
   return (
-    <>
-    {cookies.isLoggedIn === "Yes" ? (
+      <>
     <NavigationContainer>
-      <Stack.Navigator
-            screenOptions={{
-                headerTransparent: true,
-                headerTitle: '',
-
-            }}
-        >          
-            <><Stack.Screen options={{ headerShown: false }} name="Home">
-            {props => <Home handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
-          </Stack.Screen><Stack.Screen name="Article">
-              {props => <Article handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
-            </Stack.Screen></>
-      </Stack.Navigator>
+      <Drawer.Navigator>
+          <Drawer.Screen name="ShoApp">
+            {()  => <Navigation handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
+          </Drawer.Screen>
+          <Drawer.Screen name="Questions">
+              {() => <Questions handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn}/>}
+          </Drawer.Screen>
+      </Drawer.Navigator>
     </NavigationContainer>
-    ) : (
-      <NavigationContainer>
-        <Stack.Navigator
-              screenOptions={{
-                  headerTransparent: true,
-                  headerTitle: '',
-              }}
-          >
-              <Stack.Screen name="Authenticate">
-                {props => <Authenticate handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
-              </Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
-    )}
     </>
   );
 }

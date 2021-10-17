@@ -1,8 +1,8 @@
 import server from './server'
 
-const getArticles = async () => {
+const getQuestions = async () => {
     try {
-        const response = await server.get('/articles');
+        const response = await server.get('/questions');
 
         if (response.data) {
             return response.data
@@ -13,9 +13,9 @@ const getArticles = async () => {
     }
 }
 
-const getArticleById = async (id) => {
+const getQuestionById = async (id) => {
     try {
-        const response = await server.get(`/articles/${id}`);
+        const response = await server.get(`/questions/${id}`);
 
         if (response.data) {
             return response.data
@@ -27,6 +27,6 @@ const getArticleById = async (id) => {
 }
 
 export default {
-    getArticles,
-    getArticleById
+    getQuestions,
+    getQuestionById
 };

@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native'
 
 const VerticalList = ({title, data}) => {
     const navigation = useNavigation();
-
     return (
         <>
             <Title size={20}>
