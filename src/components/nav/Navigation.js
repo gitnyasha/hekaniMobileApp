@@ -4,6 +4,7 @@ import Article from '../Article'
 import Authenticate from '../Authenticate'
 import Question from '../Question';
 import Home from '../Home';
+import Answer from '../Answer';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ const Navigation = ({handleLogin, handleLogout, isLoggedIn}) => {
           </Stack.Screen>
           <Stack.Screen name="Article" component={Article}/>
           <Stack.Screen name="Question" component={Question}/>
+          <Stack.Screen name="Answer" component={Answer} />
       </Stack.Navigator>
     </>
     ) : (

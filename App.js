@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import axios from 'axios';
 import Navigation from './src/components/nav/Navigation';
 import Questions from './src/components/Questions';
+import Answers from './src/components/Answers';
 
 const Drawer = createDrawerNavigator();
 
@@ -61,6 +62,9 @@ export default function App() {
           </Drawer.Screen>
           <Drawer.Screen name="Questions">
               {() => <Questions handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn}/>}
+          </Drawer.Screen>
+          <Drawer.Screen name="Answers">
+              {() => <Answers handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn}/>}
           </Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>

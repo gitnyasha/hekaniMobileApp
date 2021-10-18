@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Image, Text, View, ScrollView, Dimensions } from 'react-native'
-import QuestionApi from '../api/QuestionApi';
+import AnswerApi from '../api/AnswerApi';
 import ActivityIndicator from './extras/ActivityIndicator';
 
 const { width, height } = Dimensions.get('window');
 
-const Question = ({route}) => {
-    const [myquestion, setQuestion] = useState({});
-    const { id: postsId } = route.params.item;
+const Answer = ({route}) => {
+    const [post, setPost] = useState([]);
+    const { id: id } = route.params.item;
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const fetchQuestion = async (id) => {
+        const fetchAnswer = async (id) => {
             try {
-            const myQuestion = await QuestionApi.getQuestionById(id);
-            setQuestion(myQuestion);
+            const myAnswer = await AnswerApi.getAnswerById(id);
+            setPost(myAnswer);
             setLoading(false);
             } catch (error) {
                 console.error(error);
             }
         }
-    fetchQuestion(postsId);
+        fetchAnswer(id);
     }, []);
 
-    const { answers } = myquestion;
+    const { votes, comments } = post;
 
     if (loading) {
         return (
@@ -35,14 +35,23 @@ const Question = ({route}) => {
 
     return (
         <ScrollView  style={styles.container}>
+            <Image source={require('../../assets/me.jpg')} style={styles.image} />
             <View style={styles.contentContainer}>
                 <Text style={styles.title}>
-                {myquestion.question.id} {myquestion.question.title}
+                    {post.question}
                 </Text>
-                <Text style={styles.title}>Comments</Text>
-                <View style={styles.contentContainer}>
-                    {myquestion.answers.map(answer => <Text style={styles.text}>{answer.user_id}: {answer.title}</Text>)}
-                </View>
+                <Text style={styles.text}>
+                    {post.answer}
+                </Text>
+                <Text style={styles.text}>
+                    Date: {post.created}
+                </Text>
+                <Text style={styles.text}>
+                    Votes: {votes}
+                </Text>
+                <Text style={styles.text}>
+                    Comments: {comments}
+                </Text>
             </View>
         </ScrollView>
     )
@@ -73,4 +82,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Question
+export default Answer
