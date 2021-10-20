@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, Image, Text, View, ScrollView, Dimensions } from 'react-native'
 import QuestionApi from '../api/QuestionApi';
 import ActivityIndicator from './extras/ActivityIndicator';
+import AnswerForm from './forms/AnswerForm';
 
 const { width, height } = Dimensions.get('window');
 
@@ -40,8 +41,9 @@ const Question = ({route}) => {
                 {myquestion.question.id} {myquestion.question.title}
                 </Text>
                 <Text style={styles.title}>Comments</Text>
+                <AnswerForm questionid={myquestion.question.id}/>
                 <View style={styles.contentContainer}>
-                    {myquestion.answers.map(answer => <Text style={styles.text}>{answer.user_id}: {answer.title}</Text>)}
+                    {myquestion.answers.map(answer => <Text style={styles.text} key={answer.id}>{answer.user}: {answer.answer}</Text>)}
                 </View>
             </View>
         </ScrollView>

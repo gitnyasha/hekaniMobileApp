@@ -3,15 +3,16 @@ import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native'
 import Title from '../Title'
 
 const QuestionCard = ({style, item, onPress}) => {
-    const { title, desc } = item;
+    const { question, date, answers } = item;
     return (
         <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.container, style}>
             <View style={styles.content}>
                 <Title>
-                    {title}
+                    {question}
                 </Title>
-                <Text>{desc}</Text>
+                <Text>{date}</Text>
+                <Text>Answers: {answers}</Text>
             </View>
         </View>
         </TouchableWithoutFeedback>
