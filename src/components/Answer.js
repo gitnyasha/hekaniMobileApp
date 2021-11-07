@@ -44,7 +44,7 @@ const Answer = ({route}) => {
                     {post.question}
                 </Text>
                 <Text style={styles.text}>
-                    {post.author }: {post.answer}
+                    {post.author }: {post.answer.body}
                 </Text>
                 <Text style={styles.text}>
                     Date: {post.created}

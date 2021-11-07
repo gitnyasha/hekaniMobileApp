@@ -14,7 +14,7 @@ const AnswerCard = ({style, item, onPress}) => {
                 <Title>
                     {question}
                 </Title>
-                <Text>{answer}</Text>
+                <Text>{answer.title}</Text>
                 <Text>Comments: {comments} Votes: {votes}</Text>
             </View>
         </View>

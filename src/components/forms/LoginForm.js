@@ -41,7 +41,7 @@ const LoginForm = ({handleLogin}) => {
             },
             {
                 headers: { 
-                    'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com' 
+                    'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com/api/v1' 
                 },
             }
         ).then(response => {

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { WebView } from 'react-native-webview';
 import { StyleSheet, Image, Text, View, ScrollView, Dimensions } from 'react-native'
 import articlesApi from '../api/articlesApi';
 import ActivityIndicator from './extras/ActivityIndicator';
 import ArticleForm from './forms/ArticleForm';
 import LikesForm from './forms/LikesForm';
+import Constants from 'expo-constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -23,7 +25,7 @@ const Article = ({route}) => {
             }
         }
         fetchArticle(id);
-    }, []);
+    },);
 
     if (loading) {
         return (
@@ -33,16 +35,14 @@ const Article = ({route}) => {
         );
     }
 
-    return (
+    return (<>
+        <WebView 
+        style={styles.container}
+        source={{ uri: post.article.link }}
+      />
         <ScrollView  style={styles.container}>
-            <Image source={require('../../assets/me.jpg')} style={styles.image} />
+           
             <View style={styles.contentContainer}>
-                <Text style={styles.title}>
-                    {post.article.title}
-                </Text>
-                <Text style={styles.text}>
-                    {post.article.link}
-                </Text>
                 <ArticleForm articleId={post.article.id} />
                 <LikesForm articleId={post.article.id}/>
                 <Text style={styles.text}>
@@ -55,7 +55,7 @@ const Article = ({route}) => {
                     {post.replies.map(reply => <Text style={styles.text} key={reply.id}>{reply.user}: {reply.reply}</Text>)}
                 </View>
             </View>
-        </ScrollView>
+        </ScrollView></>
     )
 }
 
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        marginTop: Constants.statusBarHeight,
     },
     image: {
         width: width,

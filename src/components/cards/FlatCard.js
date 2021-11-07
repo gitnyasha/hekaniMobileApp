@@ -3,19 +3,18 @@ import { View, StyleSheet, Image, Text, TouchableWithoutFeedback } from 'react-n
 import Title from '../Title'
 
 const FlatCard = ({style, imageStyle, item, onPress}) => {
-    const { title, link } = item;
+    const { title, image } = item;
     return (
         <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.container, style}>
             <Image 
-            source={{ uri: "https://user-images.githubusercontent.com/45620987/136694624-3c9f9b2d-dc9d-418c-b522-15be6d2eea4b.jpg" }} 
+            source={{ uri: image }} 
             style={[styles.image, imageStyle]} 
             />
             <View style={styles.content}>
                 <Title>
                     {title}
                 </Title>
-                <Text>{link}</Text>
             </View>
         </View>
         </TouchableWithoutFeedback>

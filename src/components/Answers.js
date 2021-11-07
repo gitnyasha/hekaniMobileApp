@@ -24,7 +24,7 @@ const Answers = () => {
         }
     }
     fetchAnswers();
-    }, [])
+    }, []);
 
     if (isLoading) {
         return (

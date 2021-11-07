@@ -20,6 +20,7 @@ const isValidEmail = (value) => {
 const SignUpForm = ({handleLogin}) => {
     const [ user, setUser ] = useState({
         email: '',
+        name: '',
         password: '',
         passwordConfirm: '',
         error: '',
@@ -27,20 +28,21 @@ const SignUpForm = ({handleLogin}) => {
 
     const [ error, setError ] = useState('');
 
-    const { email, password, passwordConfirm } = user;
+    const { name, email, password, passwordConfirm } = user;
 
     const signUp = async () => {
         const response = await server.post(
             `/registrations`,
             {
                 user: {
+                    name: name,
                     email: email,
                     password: password,
                     passwordConfirm: passwordConfirm
                 }
             },
             { withCredentials: true },
-            {headers: { 'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com'},} 
+            {headers: { 'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com/api/v1'},} 
         ).then(response => {
             console.log(response.data);
 
@@ -77,6 +79,7 @@ const SignUpForm = ({handleLogin}) => {
         <FormContainer>
             {error ? <Text style={{ color: 'red', fontSize: 14, textAlign: 'center' }}>{error}</Text> : null}
             <FormInput value={email} onChangeText={value => handleOnChangeText(value, 'email')} autoCapitalize='none' label="Email" placeholder="Enter email" />
+            <FormInput value={name} onChangeText={value => handleOnChangeText(value, 'name')} autoCapitalize='none' label="Name" placeholder="Enter name" />
             <FormInput value={password} onChangeText={(value) => handleOnChangeText(value, 'password')} secureTextEntry autoCapitalize='none' label="Password" placeholder="Enter password" />
             <FormInput value={passwordConfirm} onChangeText={(value) => handleOnChangeText(value, 'passwordConfirm')} secureTextEntry autoCapitalize='none' label="Confirm Password" placeholder="Confirm password" />
             <FormButton onPress={submitForm} label="Sign Up" />

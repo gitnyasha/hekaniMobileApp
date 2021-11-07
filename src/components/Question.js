@@ -43,7 +43,7 @@ const Question = ({route}) => {
                 <Text style={styles.title}>Comments</Text>
                 <AnswerForm questionid={myquestion.question.id}/>
                 <View style={styles.contentContainer}>
-                    {myquestion.answers.map(answer => <Text style={styles.text} key={answer.id}>{answer.user}: {answer.answer}</Text>)}
+                    {myquestion.answers.map(answer => <Text style={styles.text} key={answer.id}>{answer.user}: {answer.answer.body}</Text>)}
                 </View>
             </View>
         </ScrollView>

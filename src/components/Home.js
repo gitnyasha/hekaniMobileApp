@@ -12,7 +12,7 @@ const Home = ({ handleLogout, isLoggedIn}) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-      const fetchArticles = async () => {
+    const fetchArticles = async () => {
 
       try {
         const myArticles = await articlesApi.getArticles();
@@ -21,12 +21,12 @@ const Home = ({ handleLogout, isLoggedIn}) => {
       } catch (error) {
           console.error(error);
       }
-  }
-  fetchArticles();
-  },)
+    }
+    fetchArticles();
+  }, []);
 
   handleLogoutButton = () => {
-    axios.delete("https://hekani-social-media.herokuapp.com/logout", {withCredentials: true})
+    axios.delete("https://hekani-social-media.herokuapp.com/api/v1/logout", {withCredentials: true})
     .then(response => {
         handleLogout();
     })

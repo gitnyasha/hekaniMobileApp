@@ -16,7 +16,7 @@ export default function App() {
 
 
   checkLogin = () => {
-    axios.get('https://hekani-social-media.herokuapp.com/logged_in', {withCredentials: true}).then(res => {
+    axios.get('https://hekani-social-media.herokuapp.com/api/v1/logged_in', {withCredentials: true}).then(res => {
       console.log("User? ",res);
       if (res.data.logged_in && cookies.isLoggedIn === "No") {
         setCookies({

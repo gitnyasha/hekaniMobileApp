@@ -3,14 +3,14 @@ import { View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native'
 import Title from '../Title'
 
 const Card = ({style, imageStyle, item, onPress}) => {
-    const { title, body } = item;
+    const { title, body, image } = item;
     return (
         <TouchableWithoutFeedback
             onPress={onPress}
         >
             <View style={styles.container, style}>
                 <Image 
-                source={{ uri: "https://user-images.githubusercontent.com/45620987/136694624-3c9f9b2d-dc9d-418c-b522-15be6d2eea4b.jpg" }} 
+                source={{ uri: image }} 
                 style={[styles.image, imageStyle]} 
                 />
                 <View style={styles.content}>

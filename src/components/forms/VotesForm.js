@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
-import { Text } from 'react-native'
+import { Alert } from 'react-native'
 import FormContainer from './FormContainer'
-import FormInput from './FormInput'
 import FormButton from './FormButton'
 import server from '../../api/server'
 
@@ -16,11 +15,15 @@ const VotesForm = ({answerid}) => {
             },
             {
                 headers: { 
-                    'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com' 
+                    'Access-Control-Allow-Origin': 'https://hekani-social-media.herokuapp.com/api/v1' 
                 },
             }
         ).then(response => {
-            console.log(response.data)             
+            if (response.data.status === 'success') {
+                Alert.alert('Success', response.data.message);
+            } else {
+                Alert.alert('Error', response.data.message);
+            }
         }).catch(error => {
             console.log(error);
         });
