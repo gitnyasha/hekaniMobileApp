@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Text, StyleSheet, FlatList } from 'react-native'
-import SmallCard from '../cards/SmallCard'
+import AnswerCard from '../cards/AnswerCard'
 import Title from '../Title'
 import { useNavigation } from '@react-navigation/native'
 
-const HorizontalList = ({title, data}) => {
+const AnswersList = ({title, data}) => {
     const navigation = useNavigation();
     return (
         <>
@@ -14,9 +14,7 @@ const HorizontalList = ({title, data}) => {
             <FlatList 
             data={data} 
             keyExtractor={item => item.id} 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => <SmallCard onPress={() => navigation.navigate('Article', {item})} item={item} key={item.id} keyExtractor={(item) => item.toString()}/>}
+            renderItem={({item}) => <AnswerCard onPress={() => navigation.navigate('Answer', {item})} item={item} key={item.id} keyExtractor={(item) => item.toString()}/>}
             />
         </>
     )
@@ -26,4 +24,4 @@ const styles = StyleSheet.create({
     container: {}
 })
 
-export default HorizontalList
+export default AnswersList

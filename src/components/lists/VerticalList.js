@@ -12,7 +12,7 @@ const VerticalList = ({title, data}) => {
                 {title}
             </Title>
             <View style={styles.container}>
-                {data.map((item) => <FlatCard onPress={() => navigation.navigate('Article', {item})} item={item} key={item.id} />)}
+                {data.map((item) => <FlatCard onPress={() => navigation.navigate('Article', {item})} item={item} key={item.id} keyExtractor={(item) => item.toString()} />)}
             </View>
         </>
     )

@@ -3,6 +3,7 @@ import { StyleSheet, Image, Text, View, ScrollView, Dimensions } from 'react-nat
 import AnswerApi from '../api/AnswerApi';
 import ActivityIndicator from './extras/ActivityIndicator';
 import VotesForm from './forms/VotesForm';
+import HTMLView from "react-native-htmlview";
 
 const { width, height } = Dimensions.get('window');
 
@@ -38,14 +39,14 @@ const Answer = ({route}) => {
 
     return (
         <ScrollView  style={styles.container}>
-            <Image source={require('../../assets/me.jpg')} style={styles.image} />
             <View style={styles.contentContainer}>
+                <Text style={styles.text}>
+                    {post.author }
+                </Text>
                 <Text style={styles.title}>
                     {post.question}
                 </Text>
-                <Text style={styles.text}>
-                    {post.author }: {post.answer.body}
-                </Text>
+                <HTMLView value={post.answer.body} stylesheet={styles.description} />
                 <Text style={styles.text}>
                     Date: {post.created}
                 </Text>
@@ -86,6 +87,10 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         marginBottom: 10,
+    },
+    description: {
+        fontSize: 16,
+        marginTop: 10
     },
 })
 

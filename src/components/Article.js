@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { WebView } from 'react-native-webview';
-import { StyleSheet, Image, Text, View, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet,Alert, Modal, Pressable, Text, View, ScrollView, Dimensions } from 'react-native'
 import articlesApi from '../api/articlesApi';
 import ActivityIndicator from './extras/ActivityIndicator';
 import ArticleForm from './forms/ArticleForm';
@@ -13,6 +13,7 @@ const Article = ({route}) => {
     const [post, setPost] = useState([]);
     const { id: id } = route.params.item;
     const [loading, setLoading] = useState(true)
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         const fetchArticle = async (id) => {
@@ -25,7 +26,7 @@ const Article = ({route}) => {
             }
         }
         fetchArticle(id);
-    },);
+    },[]);
 
     if (loading) {
         return (
@@ -40,30 +41,58 @@ const Article = ({route}) => {
         style={styles.container}
         source={{ uri: post.article.link }}
       />
-        <ScrollView  style={styles.container}>
-           
-            <View style={styles.contentContainer}>
-                <ArticleForm articleId={post.article.id} />
-                <LikesForm articleId={post.article.id}/>
-                <Text style={styles.text}>
-                Likes: {post.likes}
-                </Text>
-                <Text style={styles.text}>
-                Replies:
-                </Text>
-                <View style={styles.contentContainer}>
-                    {post.replies.map(reply => <Text style={styles.text} key={reply.id}>{reply.user}: {reply.reply}</Text>)}
-                </View>
-            </View>
-        </ScrollView></>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setModalVisible(!modalVisible);
+                }}
+            >
+                <ScrollView>
+                    <View style={styles.centeredView}>
+                        <Text style={styles.text}>
+                        Likes: {post.likes}
+                        </Text>
+                        <Pressable
+                        style={[styles.button, styles.buttonClose]}
+                        onPress={() => setModalVisible(!modalVisible)}
+                        >
+                        <Text style={styles.textStyle}>Close</Text>
+                        </Pressable>
+                        <ArticleForm articleId={post.article.id} />
+                        <LikesForm articleId={post.article.id}/>
+                        <View style={styles.contentContainer}>
+                        <Text style={styles.text}>
+                        Replies:
+                        </Text>
+                            {post.replies.map(reply =>
+                                <View key={reply.id} style={styles.commentContainer}>
+                                    <Text style={styles.text} key={reply.id}>{reply.user}</Text>
+                                    <Text>{reply.reply}</Text>
+                                </View>
+                            )}
+                        </View>
+                    </View>
+                </ScrollView>
+            </Modal>
+            <Pressable
+                style={[styles.button, styles.buttonOpen]}
+                onPress={() => setModalVisible(true)}
+            >
+                <Text style={styles.textStyle}>Likes: {post.likes} </Text>
+            </Pressable>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    webContainer: {
         flex: 1,
         backgroundColor: '#fff',
         marginTop: Constants.statusBarHeight,
+        height: height,
     },
     image: {
         width: width,
@@ -71,7 +100,11 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     contentContainer: {
+        padding: 20,
+    },
+    commentContainer: {
         padding: 10,
+        borderBottomWidth: 1,
     },
     title: {
         fontSize: 20,
@@ -83,6 +116,47 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 10,
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        marginTop: 22,
+        backgroundColor: '#fff',
+        height: height,
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      button: {
+        padding: 10,
+        elevation: 2
+      },
+      buttonOpen: {
+        backgroundColor: "#2196F3",
+      },
+      buttonClose: {
+        backgroundColor: "#2196F3",
+      },
+      textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+      }
 })
 
 export default Article

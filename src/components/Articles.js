@@ -5,7 +5,7 @@ import VerticalList from './lists/VerticalList'
 const Articles = ({ data }) => {
     return (
         <>
-        <HorizontalList title="Featured" data={data} />
+        {/* <HorizontalList title="Featured" data={data} /> */}
         <VerticalList title="Recent" data={data} />
         </>
     )

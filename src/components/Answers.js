@@ -12,8 +12,7 @@ const Answers = () => {
     const [answers, setAnswers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchAnswers = async () => {
+    const fetchAnswers = async () => {
 
         try {
             const myAnswers = await AnswerApi.getAnswers();
@@ -23,7 +22,9 @@ const Answers = () => {
             console.error(error);
         }
     }
-    fetchAnswers();
+    
+    useEffect(() => {  
+        fetchAnswers();
     }, []);
 
     if (isLoading) {
