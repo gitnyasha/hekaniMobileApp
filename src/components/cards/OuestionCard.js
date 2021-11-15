@@ -9,7 +9,7 @@ const QuestionCard = ({style, item, onPress}) => {
         <View style={styles.container, style}>
             <View style={styles.content}>
                 <Title>
-                    {question}
+                    {question}?
                 </Title>
                 <Text>{date}</Text>
                 <Text>Answers: {answers}</Text>

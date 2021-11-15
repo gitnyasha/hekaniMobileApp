@@ -1,9 +1,15 @@
 import React, {useState} from 'react'
-import { Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 import FormContainer from './FormContainer'
 import FormInput from './FormInput'
 import FormButton from './FormButton'
 import server from '../../api/server'
+import {
+    actions,
+    defaultActions,
+    RichEditor,
+    RichToolbar,
+  } from "react-native-pell-rich-editor";
 
 const AnswerForm = ({questionid}) => {
     const [ answer, setAnswer ] = useState({
@@ -28,7 +34,7 @@ const AnswerForm = ({questionid}) => {
         ).then(response => {
 
             if (response.data.status === 'success') {
-                console.log('success')             
+                Alert.alert(response.data.status);
             }
         }).catch(error => {
             console.log(error);
@@ -41,10 +47,16 @@ const AnswerForm = ({questionid}) => {
 
     return (
         <FormContainer>
-            <FormInput value={title} onChangeText={value => handleOnChangeText(value, 'title')} autoCapitalize='none' label="Comment" placeholder="Answer..." />
+            <FormInput style={styles.input} value={title} onChangeText={value => handleOnChangeText(value, 'title')} autoCapitalize='none' label="Comment" placeholder="Answer..." />
             <FormButton label="Submit" onPress={submitForm} />
         </FormContainer>
     )
 }
+
+const styles = StyleSheet.create({
+    input: {
+        marginTop: 10,
+    }
+});
 
 export default AnswerForm

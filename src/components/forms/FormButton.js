@@ -14,7 +14,7 @@ const FormButton = ({label, onPress}) => {
 const styles = StyleSheet.create({
     container: {
         height: 50,
-        backgroundColor: 'rgba(27,27,51,0.4)',
+        backgroundColor: "#2196F3",
         padding: 10,
         borderRadius: 5,
         marginTop: 10,
