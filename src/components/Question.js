@@ -27,7 +27,7 @@ const Question = ({route}) => {
             }
         }
     fetchQuestion(postsId);
-    });
+    },[]);
 
     const { answers } = myquestion;
 
@@ -44,7 +44,7 @@ const Question = ({route}) => {
         <ScrollView  style={styles.container}>
             <View style={styles.contentContainer}>
                 <Text style={styles.title}>
-                {myquestion.question.id} {myquestion.question.title}
+                {myquestion.question.title}
                 </Text>
                 <Text style={styles.title}>Answers</Text>
                 <View style={styles.contentContainer}>
