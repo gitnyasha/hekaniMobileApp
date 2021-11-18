@@ -17,6 +17,7 @@ function BottomTab({handleLogin, handleLogout, isLoggedIn}) {
       {isLoggedIn === "Yes" ? (
         <Tab.Navigator
         screenOptions={({ route }) => ({
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
          let iconName;
          if (route.name === 'Profile') {
@@ -27,7 +28,7 @@ function BottomTab({handleLogin, handleLogout, isLoggedIn}) {
             iconName = focused
             ? 'addusergroup'
             : 'addusergroup';
-          } else if (route.name === 'Articles') {
+          } else if (route.name === 'News') {
             iconName = focused
             ? 'filetext1'
             : 'filetext1';
@@ -40,12 +41,8 @@ function BottomTab({handleLogin, handleLogout, isLoggedIn}) {
             },
           })
         }
-          tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-          }}
         >
-            <Tab.Screen name="Articles" component={Navigation} />
+            <Tab.Screen name="News" component={Navigation} />
             <Tab.Screen name="Profile" component={UserProfile} />
             <Tab.Screen name="Following" component={Questions} />
             <Tab.Screen name="Notifications" component={Notifications} />
