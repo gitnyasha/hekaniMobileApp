@@ -24,7 +24,7 @@ const Home = ({ handleLogout, isLoggedIn}) => {
   
   useEffect(() => {
     fetchArticles();
-  });
+  }, []);
 
   handleLogoutButton = () => {
     axios.delete("https://hekani-social-media.herokuapp.com/api/v1/logout", {withCredentials: true})
@@ -47,15 +47,15 @@ const Home = ({ handleLogout, isLoggedIn}) => {
 
   return (
     <Screen>
-        {isLoggedIn === "Yes" ? <Button title="LOGOUT" onPress={handleLogoutButton} /> : <Text>You are not logged in</Text>}
-        <Featured
+        {/* {isLoggedIn === "Yes" ? <Button title="LOGOUT" onPress={handleLogoutButton} /> : <Text>You are not logged in</Text>} */}
+        {/* <Featured
           title="Featured"
           item = {{
             title: 'React Native',
             body: 'A framework for building native apps using React',
             image: "https://user-images.githubusercontent.com/45620987/136694624-3c9f9b2d-dc9d-418c-b522-15be6d2eea4b.jpg"
           }}
-        />
+        /> */}
         <Articles data={articles} />
     </Screen>
   );

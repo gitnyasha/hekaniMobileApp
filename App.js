@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import axios from 'axios';
-import Navigation from './src/components/nav/Navigation';
+import BottomTab from './src/components/nav/BottomTab';
 import Questions from './src/components/Questions';
 import Answers from './src/components/Answers';
+import UserProfile from './src/components/UserProfile';
 
 const Drawer = createDrawerNavigator();
 
@@ -13,7 +14,6 @@ export default function App() {
     isLoggedIn: "No",
     user: {}
   });
-
 
   checkLogin = () => {
     axios.get('https://hekani-social-media.herokuapp.com/api/v1/logged_in', {withCredentials: true}).then(res => {
@@ -57,14 +57,17 @@ export default function App() {
       <>
     <NavigationContainer>
       <Drawer.Navigator>
-          <Drawer.Screen name="ShoApp">
-            {()  => <Navigation handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
+          <Drawer.Screen name="App">
+            {()  => <BottomTab handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
           </Drawer.Screen>
           <Drawer.Screen name="Questions">
               {() => <Questions handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn}/>}
           </Drawer.Screen>
           <Drawer.Screen name="Answers">
               {() => <Answers handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn}/>}
+          </Drawer.Screen>
+          <Drawer.Screen name="Profile">
+              {() => <UserProfile handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn}/>}
           </Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>
