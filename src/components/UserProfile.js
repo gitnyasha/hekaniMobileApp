@@ -1,34 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import UserApi from '../api/UserApi';
+import axios from 'axios';
 import ActivityIndicator from './extras/ActivityIndicator';
 
 const UserProfile = () => {
     const [user, setUser] = useState({});
-    const [loading, setLoading] = useState(true)
-    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const currentUser = () => {
+        axios.get('https://hekani-social-media.herokuapp.com/api/v1/logged_in', {withCredentials: true}).then(res => {
+          if (res.data.logged_in) {
+            setUser(res.data.user);
+          }
+        }).catch(err => {
+          console.log("No", err);
+        });
+    }
 
     useEffect(() => {
-        const fetchUser = async (id) => {
-            try {
-            const myProfile = await UserApi.getUserById(id);
-            setUser(myProfile);
-            setLoading(false);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        fetchUser(id);
-    },[]);
-
-    if (loading) {
-        return (
-        <View>
-            <ActivityIndicator visible={true}/>
-        </View>
-        );
-    }
+        currentUser();
+      }, []);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -47,8 +38,8 @@ const UserProfile = () => {
             </View>
 
             <View style={styles.infoContainer}>
-                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Julie</Text>
-                <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Photographer</Text>
+                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{user.name}</Text>
+                <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>{user.bio}</Text>
             </View>
 
             <View style={styles.statsContainer}>
