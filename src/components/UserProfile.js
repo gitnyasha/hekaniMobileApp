@@ -1,25 +1,46 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, Dimensions } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import axios from 'axios';
+import UserApi from '../api/UserApi';
+import AnswerCard from './cards/AnswerCard'
+import { useNavigation } from '@react-navigation/native'
 import ActivityIndicator from './extras/ActivityIndicator';
 
-const UserProfile = () => {
-    const [user, setUser] = useState({});
+const { width, height } = Dimensions.get('window');
 
-    const currentUser = () => {
-        axios.get('https://hekani-social-media.herokuapp.com/api/v1/logged_in', {withCredentials: true}).then(res => {
-          if (res.data.logged_in) {
-            setUser(res.data.user);
-          }
-        }).catch(err => {
-          console.log("No", err);
-        });
+const UserProfile = () => {
+    const navigation = useNavigation();
+
+    const [user, setUser] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+
+    const currentUser = async () => {
+        try {
+            axios.get('https://hekani-social-media.herokuapp.com/api/v1/logged_in', {withCredentials: true}).then(res => {
+            }).catch(err => {
+            console.log("No", err);
+            });
+            const getUser = await UserApi.getUserById(user.id);
+            setUser(getUser);
+            setIsLoading(false);
+            console.log(getUser);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     useEffect(() => {
         currentUser();
       }, []);
+
+      if (isLoading) {
+        return (
+          <View>
+            <ActivityIndicator visible={true}/>
+          </View>
+        );
+      }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -44,35 +65,23 @@ const UserProfile = () => {
 
             <View style={styles.statsContainer}>
                 <View style={styles.statsBox}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>483</Text>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{user.number_of_feeds}</Text>
                     <Text style={[styles.text, styles.subText]}>Posts</Text>
                 </View>
                 <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>45,844</Text>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{user.number_of_followers}</Text>
                     <Text style={[styles.text, styles.subText]}>Followers</Text>
                 </View>
                 <View style={styles.statsBox}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>302</Text>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{user.number_of_following}</Text>
                     <Text style={[styles.text, styles.subText]}>Following</Text>
                 </View>
             </View>
             <Text style={[styles.subText, styles.recent]}>Recent Activity</Text>
             <View style={{ alignItems: "center" }}>
                 <View style={styles.recentItem}>
-                    <View style={styles.activityIndicator}></View>
-                    <View style={{ width: 250 }}>
-                        <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                            Started following <Text style={{ fontWeight: "400" }}>Jake Challeahe</Text> and <Text style={{ fontWeight: "400" }}>Luis Poteer</Text>
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={styles.recentItem}>
-                    <View style={styles.activityIndicator}></View>
-                    <View style={{ width: 250 }}>
-                        <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                            Started following <Text style={{ fontWeight: "400" }}>Luke Harper</Text>
-                        </Text>
+                    <View style={{ width: width }}>
+                        {user.feed.map((item) => <AnswerCard onPress={() => navigation.navigate('Answer', {item})} item={item} key={item.id} />)}
                     </View>
                 </View>
             </View>
