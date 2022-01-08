@@ -29,7 +29,6 @@ const Question = ({route}) => {
     fetchQuestion(postsId);
     },[]);
 
-    const { answers } = myquestion;
 
     if (loading) {
         return (

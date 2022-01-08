@@ -43,23 +43,23 @@ const AnswerForm = ({questionid}) => {
     };
 
     return (
-        // <FormContainer>
-        //     <FormInput style={styles.input} value={title} onChangeText={value => handleOnChangeText(value, 'title')} autoCapitalize='none' label="Comment" placeholder="Answer..." />
-        //     <FormButton label="Submit" onPress={submitForm} />
-        // </FormContainer>
-        <SafeAreaView style={styles.root}>
-        <StatusBar style="auto" />
-        <QuillEditor
-            autoSize
-            container={true}
-            style={styles.editor}
-            ref={_editor}
-            onChangeText={value => handleOnChangeText(value, 'title')}
-            initialHtml="<h1>Add answer</h1>"
-            style={{ minHeight: 300, maxHeight: 500 }}
-        />
-        <QuillToolbar editor={_editor} options="full" theme="light" />
-      </SafeAreaView>
+        <FormContainer>
+            <FormInput style={styles.input} value={title} onChangeText={value => handleOnChangeText(value, 'title')} autoCapitalize='none' label="Comment" placeholder="Answer..." />
+            <FormButton label="Submit" onPress={submitForm} />
+        </FormContainer>
+    //     <SafeAreaView style={styles.root}>
+    //     <StatusBar style="auto" />
+    //     <QuillEditor
+    //         autoSize
+    //         container={true}
+    //         style={styles.editor}
+    //         ref={_editor}
+    //         onChangeText={value => handleOnChangeText(value, 'title')}
+    //         initialHtml="<h1>Add answer</h1>"
+    //         style={{ minHeight: 300, maxHeight: 500 }}
+    //     />
+    //     <QuillToolbar editor={_editor} options="full" theme="light" />
+    //   </SafeAreaView>
     )
 }
 

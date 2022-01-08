@@ -5,12 +5,30 @@ import Question from '../Question';
 import Home from '../Home';
 import Answer from '../Answer';
 import QuestionForm from '../forms/QuestionForm';
+import { TouchableWithoutFeedback, StyleSheet, Dimensions } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = ({handleLogin, handleLogout, isLoggedIn}) => {
+  const navigation = useNavigation();
+
     return (
-      <Stack.Navigator screenOptions={{ headerTransparent: true, headerTitle: '',}}>
+      <Stack.Navigator 
+      screenOptions={{ 
+        headerTransparent: true, 
+        headerShown: false,
+        headerTintColor: 'white',
+        headerRight: () => (
+        <TouchableWithoutFeedback
+            style={{position: 'absolute', ...styles.button}}
+            onPress={() => navigation.goBack()} >
+            <Ionicons name="md-arrow-back" size={32} color="#000" />
+        </TouchableWithoutFeedback>
+        )
+      }}
+      >
           <Stack.Screen name="Home">
             {() => <Home handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={isLoggedIn} />}
           </Stack.Screen>
@@ -21,5 +39,19 @@ const Navigation = ({handleLogin, handleLogout, isLoggedIn}) => {
       </Stack.Navigator>
     )
 }
+
+const styles = StyleSheet.create({
+  button: {
+      width: 60,
+      height: 60,
+      borderRadius: 30,
+      backgroundColor: '#0080ff',
+      justifyContent: 'center',
+      alignItems: 'center',
+      top: 5,
+      right: 50,
+      elevation: 5,
+  },
+})
 
 export default Navigation

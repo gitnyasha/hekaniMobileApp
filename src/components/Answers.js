@@ -46,7 +46,7 @@ const Answers = () => {
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: 15,
+        marginVertical: 0,
     }
 })
 

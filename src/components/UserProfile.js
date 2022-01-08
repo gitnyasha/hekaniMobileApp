@@ -24,7 +24,6 @@ const UserProfile = () => {
             const getUser = await UserApi.getUserById(user.id);
             setUser(getUser);
             setIsLoading(false);
-            console.log(getUser);
         } catch (error) {
             console.error(error);
         }
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF"
     },
     text: {
-        fontFamily: "HelveticaNeue",
+        // fontFamily: "HelveticaNeue",
         color: "#52575D"
     },
     image: {

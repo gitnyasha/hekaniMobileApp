@@ -4,6 +4,8 @@ import AnswerApi from '../api/AnswerApi';
 import ActivityIndicator from './extras/ActivityIndicator';
 import VotesForm from './forms/VotesForm';
 import HTMLView from "react-native-htmlview";
+import { FontAwesome5 } from '@expo/vector-icons';
+import Moment from 'moment';
 
 const { width, height } = Dimensions.get('window');
 
@@ -40,25 +42,40 @@ const Answer = ({route}) => {
     return (
         <ScrollView  style={styles.container}>
             <View style={styles.contentContainer}>
-                <Text style={styles.text}>
-                    {post.author }
-                </Text>
-                <Text style={styles.title}>
-                    {post.question}
-                </Text>
-                <HTMLView value={post.answer.body} stylesheet={styles.description} />
-                <Text style={styles.text}>
-                    Date: {post.created}
-                </Text>
-                <Text style={styles.text}>
-                    Votes: {votes}
-                </Text>
-                <VotesForm answerid={post.id} />
+                <View style={styles.content}>
+                    <View style={styles.profileImage}>
+                        <Image source={require("../../assets/me.jpg")} style={styles.image} resizeMode="center"></Image>
+                        <View style={styles.author}>
+                            <Text style={{ fontWeight: 'bold' }}>{post.author}</Text>
+                            <Text style={{ color: '#aaa', fontSize: 11 }}>{post.bio}</Text>
+                        </View>
+                    </View>
+                    <Text style={styles.title}>
+                        {post.question}?
+                    </Text>
+                    <HTMLView value={post.answer.body} stylesheet={styles.description} />
+                    <Text style={styles.btm}>
+                        <Text style={styles.btmFields}><FontAwesome5 style={styles.icons} name="comments" size={18} color="#aaa" /> {comments.length} </Text>
+                        <Text><VotesForm answerid={post.id} /> {votes} </Text>
+                        <Text style={styles.btmFields}><FontAwesome5 style={styles.icons} name="calendar-alt" size={18} color="#aaa" /> {Moment(post.created).format('MMMM Do YYYY, h:mm:ss a')} </Text>
+                    </Text>
+                </View>
                 <Text style={styles.text}>
                     Comments:
                 </Text>
                 <View style={styles.contentContainer}>
-                    {comments.map(comment => <Text style={styles.text} key={comment.id}>{comment.user}: {comment.comment}</Text>)}
+                    {comments.map(comment => (
+                    <View style={styles.comment}>
+                        <View style={styles.profileImage} key={comment.id}>
+                            <Image source={require("../../assets/me.jpg")} style={styles.image} resizeMode="center"></Image>
+                            <View style={styles.author}>
+                                <Text style={{ fontWeight: 'bold' }}>{comment.user}</Text>
+                                <Text style={{ color: '#aaa', fontSize: 11 }}>{Moment(comment.created).format('dddd, MMMM Do YYYY, h:mm:ss a')}</Text>
+                            </View>
+                        </View>
+                        <Text style={styles.text} >{comment.comment}</Text>
+                    </View>
+                    ))}
                 </View>
             </View>
         </ScrollView>
@@ -71,26 +88,66 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     image: {
-        width: width,
-        height: height / 2,
-        resizeMode: 'cover',
+        width: 40,
+        height: 40,
+        borderRadius: 25,
+        overflow: 'hidden',
+        marginRight: 10,
     },
-    contentContainer: {
-        padding: 10,
+    content: {
+        padding: 5,
     },
     title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
+        fontSize: 15,
         marginTop: 10,
-    },
-    text: {
-        fontSize: 16,
         marginBottom: 10,
+        fontWeight: "bold",
+        fontFamily: "Roboto",
+        color: "#333",
+    },
+    author: {
+        fontSize: 13,
+        color: '#333',
+        marginBottom: 5,
+        flexDirection: 'column',
     },
     description: {
         fontSize: 16,
         marginTop: 10
+    },
+    btm: {
+        fontSize: 14,
+        marginTop: 10,
+        color: '#222',
+        fontFamily: "Roboto",
+        backgroundColor: '#eee',
+        padding: 7,
+        flexDirection: 'row',
+    },
+    btmFields: {
+        color: '#222',
+        fontFamily: "Roboto",
+    },
+    profileImage: {
+        width: '100%',
+        flexDirection: 'row',
+    },
+    text: {
+        fontSize: 15,
+        fontFamily: "Roboto",
+        color: '#222',
+        marginTop: 5,
+        marginBottom: 10,
+        paddingLeft: 50,
+        paddingRight: 50,
+    },
+    contentContainer: {
+        padding: 5,
+    },
+    comment: {
+        padding: 5,
+        borderBottomColor: '#eee',
+        borderBottomWidth: 1,
     },
 })
 

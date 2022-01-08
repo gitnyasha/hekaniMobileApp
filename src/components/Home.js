@@ -24,7 +24,7 @@ const Home = ({ handleLogout, isLoggedIn}) => {
   
   useEffect(() => {
     fetchArticles();
-  }, []);
+  }, [articles]);
 
   handleLogoutButton = () => {
     axios.delete("https://hekani-social-media.herokuapp.com/api/v1/logout", {withCredentials: true})

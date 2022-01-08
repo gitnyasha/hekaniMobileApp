@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
-import { Alert } from 'react-native'
-import FormContainer from './FormContainer'
-import FormButton from './FormButton'
+import { Alert, KeyboardAvoidingView } from 'react-native'
 import server from '../../api/server'
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const VotesForm = ({answerid}) => {
     const submitForm = async () => {
@@ -30,9 +29,12 @@ const VotesForm = ({answerid}) => {
     }
 
     return (
-        <FormContainer>
-            <FormButton label="Upvote" onPress={submitForm} />
-        </FormContainer>
+        <KeyboardAvoidingView 
+            behavior={Platform.OS === 'ios' ? 'padding' : null}
+            enabled
+        >        
+        <FontAwesome5 onPress={submitForm} name="thumbs-up" size={18} color="#aaa" />
+        </KeyboardAvoidingView>
     )
 }
 
