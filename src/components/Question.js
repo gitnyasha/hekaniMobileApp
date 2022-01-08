@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     contentContainer: {
-        padding: 10,
+        padding: 5,
+        backgroundColor: '#dff9fb',
     },
     title: {
         fontSize: 20,

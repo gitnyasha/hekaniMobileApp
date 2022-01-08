@@ -6,6 +6,7 @@ import VotesForm from './forms/VotesForm';
 import HTMLView from "react-native-htmlview";
 import { FontAwesome5 } from '@expo/vector-icons';
 import Moment from 'moment';
+import CommentForm from './forms/CommentForm';
 
 const { width, height } = Dimensions.get('window');
 
@@ -60,13 +61,11 @@ const Answer = ({route}) => {
                         <Text style={styles.btmFields}><FontAwesome5 style={styles.icons} name="calendar-alt" size={18} color="#aaa" /> {Moment(post.created).format('MMMM Do YYYY, h:mm:ss a')} </Text>
                     </Text>
                 </View>
-                <Text style={styles.text}>
-                    Comments:
-                </Text>
+                <CommentForm answerid={post.id}/>
                 <View style={styles.contentContainer}>
                     {comments.map(comment => (
-                    <View style={styles.comment}>
-                        <View style={styles.profileImage} key={comment.id}>
+                    <View style={styles.comment} key={comment.id}>
+                        <View style={styles.profileImage}>
                             <Image source={require("../../assets/me.jpg")} style={styles.image} resizeMode="center"></Image>
                             <View style={styles.author}>
                                 <Text style={{ fontWeight: 'bold' }}>{comment.user}</Text>

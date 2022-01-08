@@ -198,7 +198,8 @@ const styles = StyleSheet.create({
     recentItem: {
         flexDirection: "row",
         alignItems: "flex-start",
-        marginBottom: 16
+        marginBottom: 16,
+        backgroundColor: "#eee",
     },
     activityIndicator: {
         backgroundColor: "#CABFAB",

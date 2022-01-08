@@ -57,7 +57,7 @@ export default function App() {
       <>
     <NavigationContainer>
       <Drawer.Navigator>
-          <Drawer.Screen name="App">
+          <Drawer.Screen name="HekaniApp">
             {()  => <BottomTab handleLogin={handleLogin} handleLogout={handleLogout} isLoggedIn={cookies.isLoggedIn} />}
           </Drawer.Screen>
           <Drawer.Screen name="Questions">

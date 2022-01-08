@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         backgroundColor: 'white',
-        marginTop: 10,
+        marginTop: 5,
         borderBottomColor: '#ddd',
     },
     image: {
@@ -77,9 +77,10 @@ const styles = StyleSheet.create({
         marginTop: 10,
         color: '#222',
         fontFamily: "Roboto",
-        backgroundColor: '#eee',
         padding: 7,
         flexDirection: 'row',
+        borderTopWidth: 1,
+        borderTopColor: '#eee',
     },
     btmFields: {
         color: '#222',
