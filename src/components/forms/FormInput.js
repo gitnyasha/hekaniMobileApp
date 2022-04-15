@@ -17,13 +17,10 @@ const FormInput = (props) => {
 
 const styles = StyleSheet.create({
     input: {
-        height: 40,
-        borderColor: 'gray',
-        borderRadius: 5,
+        height: 55,
         fontSize: 16,
         padding: 10,
-        borderWidth: 1,
-        marginBottom: 10
+        width: '100%',
     }
 });
 

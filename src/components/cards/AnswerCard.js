@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         fontWeight: "bold",
-        fontFamily: "Roboto",
         color: "#333",
     },
     author: {
@@ -76,7 +75,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginTop: 10,
         color: '#222',
-        fontFamily: "Roboto",
         padding: 7,
         flexDirection: 'row',
         borderTopWidth: 1,
@@ -84,7 +82,6 @@ const styles = StyleSheet.create({
     },
     btmFields: {
         color: '#222',
-        fontFamily: "Roboto",
     },
     profileImage: {
         width: '100%',

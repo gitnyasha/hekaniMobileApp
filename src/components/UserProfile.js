@@ -12,15 +12,11 @@ const { width, height } = Dimensions.get('window');
 const UserProfile = () => {
     const navigation = useNavigation();
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const currentUser = async () => {
         try {
-            axios.get('https://hekani-social-media.herokuapp.com/api/v1/logged_in', {withCredentials: true}).then(res => {
-            }).catch(err => {
-            console.log("No", err);
-            });
             const getUser = await UserApi.getUserById(user.id);
             setUser(getUser);
             setIsLoading(false);

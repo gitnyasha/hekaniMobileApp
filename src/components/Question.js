@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, TouchableWithoutFeedback,Modal, Text, View, ScrollView, Dimensions, Pressable } from 'react-native'
+import { StyleSheet,Modal, Text, View, ScrollView, Dimensions, Pressable } from 'react-native'
 import QuestionApi from '../api/QuestionApi';
 import ActivityIndicator from './extras/ActivityIndicator';
 import AnswerForm from './forms/AnswerForm';
@@ -27,7 +27,7 @@ const Question = ({route}) => {
             }
         }
     fetchQuestion(postsId);
-    },[]);
+    },[myquestion]);
 
 
     if (loading) {

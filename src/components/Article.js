@@ -6,6 +6,7 @@ import ActivityIndicator from './extras/ActivityIndicator';
 import ArticleForm from './forms/ArticleForm';
 import LikesForm from './forms/LikesForm';
 import Constants from 'expo-constants';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,18 +16,19 @@ const Article = ({route}) => {
     const [loading, setLoading] = useState(true)
     const [modalVisible, setModalVisible] = useState(false);
 
-    useEffect(() => {
-        const fetchArticle = async (id) => {
-            try {
-            const myArticle = await articlesApi.getArticleById(id);
-            setPost(myArticle);
-            setLoading(false);
-            } catch (error) {
-                console.error(error);
-            }
+    const fetchArticle = async (id) => {
+        try {
+        const myArticle = await articlesApi.getArticleById(id);
+        setPost(myArticle);
+        setLoading(false);
+        } catch (error) {
+            console.error(error);
         }
+    }
+
+    useEffect(() => {
         fetchArticle(id);
-    },[]);
+    },[post]);
 
     if (loading) {
         return (
@@ -37,10 +39,10 @@ const Article = ({route}) => {
     }
 
     return (<>
-        <WebView 
-        style={styles.container}
-        source={{ uri: post.article.link }}
-      />
+            <WebView 
+                style={styles.container}
+                source={{ uri: post.article.link }}
+            />
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -81,7 +83,7 @@ const Article = ({route}) => {
                 style={[styles.button, styles.buttonOpen]}
                 onPress={() => setModalVisible(true)}
             >
-                <Text style={styles.textStyle}>Likes: {post.likes} </Text>
+                <Text style={styles.textStyle}><FontAwesome5 style={styles.icons} name="thumbs-up" size={18} color="#aaa" /> {post.likes} </Text>
             </Pressable>
         </>
     )
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
         elevation: 2
       },
       buttonOpen: {
-        backgroundColor: "#2196F3",
+        backgroundColor: "#ddd",
       },
       buttonClose: {
         backgroundColor: "#2196F3",

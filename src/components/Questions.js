@@ -11,8 +11,7 @@ const Questions = () => {
     const [questions, setQuestions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchQuestions = async () => {
+    const fetchQuestions = async () => {
 
         try {
             const myQuestions = await QuestionApi.getQuestions();
@@ -22,8 +21,10 @@ const Questions = () => {
             console.error(error);
         }
     }
-    fetchQuestions();
-    })
+
+    useEffect(() => {
+       fetchQuestions();
+    }, [questions]);
 
     if (isLoading) {
         return (

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Alert, KeyboardAvoidingView } from 'react-native'
+import { Alert, KeyboardAvoidingView, StyleSheet } from 'react-native'
 import server from '../../api/server'
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -33,9 +33,16 @@ const VotesForm = ({answerid}) => {
             behavior={Platform.OS === 'ios' ? 'padding' : null}
             enabled
         >        
-        <FontAwesome5 onPress={submitForm} name="thumbs-up" size={18} color="#aaa" />
+        <FontAwesome5 style={styles.voteBtn} onPress={submitForm} name="thumbs-up" size={28} color="#aaa" />
         </KeyboardAvoidingView>
     )
 }
+
+const styles = StyleSheet.create({
+    voteBtn: {
+        marginBottom: -8,
+        paddingLeft: 15,
+    },
+});
 
 export default VotesForm
