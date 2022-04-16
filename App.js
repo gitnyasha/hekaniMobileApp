@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import ActivityIndicator from "./src/components/extras/ActivityIndicator";
 import axios from "axios";
 import Answers from "./src/components/Answers";
 import UserProfile from "./src/components/UserProfile";
@@ -22,6 +24,7 @@ export default function App() {
     isLoggedIn: "No",
     user: {},
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   checkLogin = () => {
     axios
@@ -41,6 +44,7 @@ export default function App() {
             user: {},
           });
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("No", err);
@@ -64,6 +68,14 @@ export default function App() {
       user: {},
     });
   };
+
+  if (isLoading) {
+    return (
+      <View>
+        <ActivityIndicator visible={true} />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -93,7 +105,9 @@ export default function App() {
             <Tab.Screen name="Q&A" component={Answers} />
             <Tab.Screen name="Profile" component={UserProfile} />
             <Tab.Screen name="Questions" component={Questions} />
-            <Tab.Screen name="Settings" component={Settings} />
+            <Tab.Screen name="Settings">
+              {() => <Settings handleLogout={handleLogout} />}
+            </Tab.Screen>
           </Tab.Navigator>
         ) : (
           <Stack.Navigator
