@@ -12,7 +12,6 @@ import HTMLView from "react-native-htmlview";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Moment from "moment";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import server from "../../api/server";
 import axios from "axios";
 
 const AnswerCard = ({ style, item, onPress }) => {
@@ -21,81 +20,75 @@ const AnswerCard = ({ style, item, onPress }) => {
   const [isFollowing, setIsFollowing] = useState(false);
 
   const followUser = async () => {
-    const response = await server
-      .post(
-        `/relationships`,
-        {
-          followed_id: author_id,
-        },
-        {
-          withCredentials: true,
-        },
-        {
-          headers: {
-            "Access-Control-Allow-Origin":
-              "https://hekani-social-media.herokuapp.com/api/v1",
-          },
-        }
-      )
-      .then((response) => {
-        if (response.data.status === "Successfully followed") {
-          Alert.alert("Success", response.data.message);
-        } else {
-          Alert.alert("Alert", response.data.message);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    let headersList = {
+      "Content-Type": "application/json",
+    };
+
+    let bodyContent = JSON.stringify({
+      followed_id: author_id,
+    });
+
+    let reqOptions = {
+      url: "https://hekani-social-media.herokuapp.com/api/v1/relationships",
+      method: "POST",
+      headers: headersList,
+      data: bodyContent,
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      if (response.data.status === "Successfully followed") {
+        Alert.alert("Success", response.data.message);
+      } else {
+        Alert.alert("Alert", response.data.message);
+      }
+    });
   };
 
   const unfollowUser = async () => {
-    const response = await server
-      .delete(
-        `/relationships/${author_id}`,
-        {
-          withCredentials: true,
-        },
-        {
-          headers: {
-            "Access-Control-Allow-Origin":
-              "https://hekani-social-media.herokuapp.com/api/v1",
-          },
-        }
-      )
-      .then((response) => {
-        if (response.data.status === "Successfully unfollowed") {
-          Alert.alert("Success", response.data.message);
-        } else {
-          Alert.alert("Alert", response.data.message);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    let headersList = {
+      "Content-Type": "application/json",
+    };
+
+    let bodyContent = JSON.stringify({
+      followed_id: author_id,
+    });
+
+    let reqOptions = {
+      url: "https://hekani-social-media.herokuapp.com/api/v1/relationships/1",
+      method: "DELETE",
+      headers: headersList,
+      data: bodyContent,
+    };
+
+    axios.request(reqOptions).then(function (response) {
+      if (response.data.status === "Successfully followed") {
+        Alert.alert("Success", response.data.message);
+      } else {
+        Alert.alert("Alert", response.data.message);
+      }
+    });
   };
 
-  checkUserFollowing = () => {
-    axios
-      .get(
-        "https://hekani-social-media.herokuapp.com/api/v1/does_user_follow_user",
+  checkUserFollowing = async () => {
+    try {
+      const response = await server.get(
+        `/does_user_follow_user`,
         {
-          followed_id: author_id,
+          params: { followed_id: author_id },
         },
         {
           withCredentials: true,
         }
-      )
-      .then((res) => {
-        if (res.data.status === "following") {
-          setIsFollowing(true);
-        } else {
-          setIsFollowing(false);
-        }
-      })
-      .catch((err) => {
-        console.log("No", err);
-      });
+      );
+
+      if (response.data.status === "following") {
+        setIsFollowing(true);
+      } else {
+        setIsFollowing(false);
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   useEffect(() => {
