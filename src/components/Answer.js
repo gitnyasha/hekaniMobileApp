@@ -134,10 +134,8 @@ const Answer = ({ route }) => {
               </View>
             </View>
             <Text style={styles.title}>{post.question}?</Text>
-            <HTMLView
-              value={post.answer.body}
-              stylesheet={styles.description}
-            />
+            {/* add body for rich text */}
+            <HTMLView value={post.answer} stylesheet={styles.description} />
             <Text style={styles.btm}>
               <Text style={styles.btmFields}>
                 <FontAwesome5

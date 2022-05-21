@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Picker, View, StyleSheet } from "react-native";
+import { Alert, View, StyleSheet } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import FormContainer from "./FormContainer";
 import FormInput from "./FormInput";
 import FormButton from "./FormButton";
