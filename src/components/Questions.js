@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import QuestionCard from "./cards/OuestionCard";
@@ -39,7 +40,7 @@ const Questions = () => {
   }
 
   return (
-    <>
+    <SafeAreaView style={styles.contain}>
       <ScrollView>
         <View style={styles.container}>
           {questions.map((item) => (
@@ -58,11 +59,15 @@ const Questions = () => {
           <FontAwesome5 name="plus" size={30} color="#fff" />
         </TouchableWithoutFeedback>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  contain: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
   container: {
     marginVertical: 15,
   },

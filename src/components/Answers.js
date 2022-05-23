@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AnswerCard from "./cards/AnswerCard";
 import ActivityIndicator from "./extras/ActivityIndicator";
@@ -24,7 +24,7 @@ const Answers = () => {
 
   useEffect(() => {
     fetchAnswers();
-  }, []);
+  }, [answers]);
 
   if (isLoading) {
     return (
@@ -35,22 +35,28 @@ const Answers = () => {
   }
 
   return (
-    <Screen>
-      <View style={styles.container}>
-        {answers.map((item) => (
-          <AnswerCard
-            onPress={() => navigation.navigate("Answer", { item })}
-            item={item}
-            key={item.id}
-          />
-        ))}
-      </View>
-    </Screen>
+    <SafeAreaView style={styles.container}>
+      <Screen>
+        <View style={styles.content}>
+          {answers.map((item) => (
+            <AnswerCard
+              onPress={() => navigation.navigate("Answer", { item })}
+              item={item}
+              key={item.id}
+            />
+          ))}
+        </View>
+      </Screen>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
+  content: {
     marginVertical: 0,
   },
 });

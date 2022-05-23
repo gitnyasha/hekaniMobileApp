@@ -102,7 +102,11 @@ const Answer = ({ route }) => {
   };
 
   useEffect(() => {
+    let cleanUp = false;
     fetchAnswer(id);
+    return () => {
+      cleanUp = true;
+    };
   }, []);
 
   const { votes, comments } = post;

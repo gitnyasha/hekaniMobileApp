@@ -4,6 +4,9 @@ import Article from "../Article";
 import Question from "../Question";
 import Home from "../Home";
 import Answer from "../Answer";
+import QuestionCategories from "../QuestionCategories";
+import ArticleCategories from "../ArticleCategories";
+import Account from "../Account";
 import QuestionForm from "../forms/QuestionForm";
 import { TouchableWithoutFeedback, StyleSheet, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -35,6 +38,9 @@ const Navigation = ({ handleLogin, handleLogout, isLoggedIn }) => {
       <Stack.Screen name="Question" component={Question} />
       <Stack.Screen name="Answer" component={Answer} />
       <Stack.Screen name="QuestionForm" component={QuestionForm} />
+      <Stack.Screen name="QuestionCategories" component={QuestionCategories} />
+      <Stack.Screen name="ArticleCategories" component={ArticleCategories} />
+      <Stack.Screen name="Account" component={Account} />
     </Stack.Navigator>
   );
 };

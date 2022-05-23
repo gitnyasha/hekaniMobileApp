@@ -1,5 +1,5 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default axios.create({
-    baseURL: 'https://hekani-social-media.herokuapp.com/api/v1',
+  baseURL: "https://hekani-social-media.herokuapp.com/api/v1",
 });

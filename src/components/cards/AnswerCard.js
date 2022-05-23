@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -7,17 +7,25 @@ import {
   Image,
   KeyboardAvoidingView,
   Alert,
+  Pressable,
 } from "react-native";
 import HTMLView from "react-native-htmlview";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Moment from "moment";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import axios from "axios";
 
-const AnswerCard = ({ style, item, onPress }) => {
-  const { answer, question, author, author_id, bio, comments, votes, created } =
-    item;
-  const [isFollowing, setIsFollowing] = useState(false);
+const AnswerCard = ({ item, onPress }) => {
+  const {
+    answer,
+    question,
+    author,
+    relationship,
+    author_id,
+    bio,
+    comments,
+    votes,
+    created,
+  } = item;
 
   const followUser = async () => {
     let headersList = {
@@ -29,7 +37,7 @@ const AnswerCard = ({ style, item, onPress }) => {
     });
 
     let reqOptions = {
-      url: "https://hekani-social-media.herokuapp.com/api/v1/relationships",
+      url: "https://hekani-social-media.herokuapp.com/api/v1/follow",
       method: "POST",
       headers: headersList,
       data: bodyContent,
@@ -54,13 +62,14 @@ const AnswerCard = ({ style, item, onPress }) => {
     });
 
     let reqOptions = {
-      url: "https://hekani-social-media.herokuapp.com/api/v1/relationships/1",
+      url: "https://hekani-social-media.herokuapp.com/api/v1/unfollow",
       method: "DELETE",
       headers: headersList,
       data: bodyContent,
     };
 
     axios.request(reqOptions).then(function (response) {
+      console.log(response.data);
       if (response.data.status === "Successfully followed") {
         Alert.alert("Success", response.data.message);
       } else {
@@ -68,32 +77,6 @@ const AnswerCard = ({ style, item, onPress }) => {
       }
     });
   };
-
-  checkUserFollowing = async () => {
-    try {
-      const response = await server.get(
-        `/does_user_follow_user`,
-        {
-          params: { followed_id: author_id },
-        },
-        {
-          withCredentials: true,
-        }
-      );
-
-      if (response.data.status === "following") {
-        setIsFollowing(true);
-      } else {
-        setIsFollowing(false);
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
-  useEffect(() => {
-    checkUserFollowing();
-  });
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -110,18 +93,15 @@ const AnswerCard = ({ style, item, onPress }) => {
               <Text style={{ color: "#aaa", fontSize: 11 }}>{bio}</Text>
             </View>
             <View style={styles.rightside}>
-              {isFollowing ? (
+              {relationship === "follow" ? (
                 <Text>
                   <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : null}
                     enabled
                   >
-                    <SimpleLineIcons
-                      name="user-follow"
-                      size={24}
-                      onPress={followUser}
-                      color="green"
-                    />
+                    <Pressable style={styles.button} onPress={followUser}>
+                      <Text style={{ color: "navy" }}>Follow</Text>
+                    </Pressable>
                   </KeyboardAvoidingView>{" "}
                 </Text>
               ) : (
@@ -130,12 +110,9 @@ const AnswerCard = ({ style, item, onPress }) => {
                     behavior={Platform.OS === "ios" ? "padding" : null}
                     enabled
                   >
-                    <SimpleLineIcons
-                      name="user-unfollow"
-                      size={24}
-                      onPress={unfollowUser}
-                      color="red"
-                    />
+                    <Pressable style={styles.button} onPress={unfollowUser}>
+                      <Text style={{ color: "red" }}>Unfollow</Text>
+                    </Pressable>
                   </KeyboardAvoidingView>{" "}
                 </Text>
               )}
@@ -235,8 +212,10 @@ const styles = StyleSheet.create({
   rightside: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginTop: 5,
-    marginLeft: 20,
+  },
+  button: {
+    marginLeft: 5,
+    fontSize: 12,
   },
 });
 
