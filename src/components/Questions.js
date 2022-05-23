@@ -5,6 +5,9 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   SafeAreaView,
+  TouchableOpacity,
+  Text,
+  RefreshControl,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import QuestionCard from "./cards/OuestionCard";
@@ -16,20 +19,26 @@ const Questions = () => {
   const navigation = useNavigation();
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [offset, setOffset] = useState(1);
 
   const fetchQuestions = async () => {
     try {
-      const myQuestions = await QuestionApi.getQuestions();
-      setQuestions(myQuestions);
+      const myQuestions = await QuestionApi.getQuestions(offset);
+      setQuestions([...questions, ...myQuestions]);
       setIsLoading(false);
+      setOffset(offset + 5);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
+    let cleanUp = false;
     fetchQuestions();
-  }, [questions]);
+    return () => {
+      cleanUp = true;
+    };
+  }, []);
 
   if (isLoading) {
     return (
@@ -50,6 +59,19 @@ const Questions = () => {
               key={item.id}
             />
           ))}
+        </View>
+        <RefreshControl isLoading={isLoading} onRefresh={fetchQuestions} />
+
+        <View style={styles.footer}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={fetchQuestions}
+            //On Click of button calling getData function to load more data
+            style={styles.loadMoreBtn}
+          >
+            <Text style={styles.btnText}>Load More</Text>
+            {isLoading ? <ActivityIndicator visible={true} /> : null}
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <View style={{ position: "absolute", ...styles.button }}>
@@ -81,6 +103,20 @@ const styles = StyleSheet.create({
     bottom: 20,
     right: 20,
     elevation: 5,
+  },
+  footer: {
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  loadMoreBtn: {
+    padding: 10,
+    backgroundColor: "grey",
+    borderRadius: 4,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

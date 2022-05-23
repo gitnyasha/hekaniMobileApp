@@ -25,6 +25,7 @@ const Question = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
+    let cleanup = false;
     const fetchQuestion = async (id) => {
       try {
         const myQuestion = await QuestionApi.getQuestionById(id);
@@ -35,6 +36,7 @@ const Question = ({ route }) => {
       }
     };
     fetchQuestion(postsId);
+    return () => (cleanup = true);
   }, [myquestion]);
 
   if (loading) {

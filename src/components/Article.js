@@ -111,7 +111,11 @@ const Article = ({ route }) => {
   };
 
   useEffect(() => {
+    let cleanUp = false;
     fetchArticle(id);
+    return () => {
+      cleanUp = true;
+    };
   }, [post]);
 
   if (loading) {

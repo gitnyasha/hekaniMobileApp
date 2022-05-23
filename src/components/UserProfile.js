@@ -14,7 +14,7 @@ import AnswerCard from "./cards/AnswerCard";
 import { useNavigation } from "@react-navigation/native";
 import ActivityIndicator from "./extras/ActivityIndicator";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const UserProfile = () => {
   const navigation = useNavigation();
@@ -24,7 +24,7 @@ const UserProfile = () => {
 
   const currentUser = async () => {
     try {
-      const getUser = await UserApi.getUserById(user.id);
+      const getUser = await UserApi.getCurrentUser();
       setUser(getUser);
       setIsLoading(false);
     } catch (error) {

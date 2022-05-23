@@ -1,31 +1,32 @@
-import server from './server'
+import server from "./server";
 
-const getAnswers = async () => {
-    try {
-        const response = await server.get('/answers');
+const getAnswers = async (offset) => {
+  try {
+    const response = await server.get(`/answers?offset=${offset}&limit=${5}`);
 
-        if (response.data) {
-            return response.data
-        }
-    } catch (error) {
-        return [];
+    if (response.data) {
+      return response.data;
     }
-}
+  } catch (error) {
+    return [];
+    console.log(error);
+  }
+};
 
 const getAnswerById = async (id) => {
-    try {
-        const response = await server.get(`/answers/${id}`);
+  try {
+    const response = await server.get(`/answers/${id}`);
 
-        if (response.data) {
-            return response.data
-        }
-    } catch (error) {
-        return {};
-        console.log(error);
+    if (response.data) {
+      return response.data;
     }
-}
+  } catch (error) {
+    return {};
+    console.log(error);
+  }
+};
 
 export default {
-    getAnswers,
-    getAnswerById
+  getAnswers,
+  getAnswerById,
 };

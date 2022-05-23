@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+  RefreshControl,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AnswerCard from "./cards/AnswerCard";
 import ActivityIndicator from "./extras/ActivityIndicator";
@@ -11,12 +18,14 @@ const Answers = () => {
 
   const [answers, setAnswers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [offset, setOffset] = useState(1);
 
   const fetchAnswers = async () => {
     try {
-      const myAnswers = await AnswerApi.getAnswers();
-      setAnswers(myAnswers);
+      const myAnswers = await AnswerApi.getAnswers(offset);
+      setAnswers([...answers, ...myAnswers]);
       setIsLoading(false);
+      setOffset(offset + 5);
     } catch (error) {
       console.error(error);
     }
@@ -24,7 +33,7 @@ const Answers = () => {
 
   useEffect(() => {
     fetchAnswers();
-  }, [answers]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -46,6 +55,19 @@ const Answers = () => {
             />
           ))}
         </View>
+        <RefreshControl isLoading={isLoading} onRefresh={fetchAnswers} />
+
+        <View style={styles.footer}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={fetchAnswers}
+            //On Click of button calling getData function to load more data
+            style={styles.loadMoreBtn}
+          >
+            <Text style={styles.btnText}>Load More</Text>
+            {isLoading ? <ActivityIndicator visible={true} /> : null}
+          </TouchableOpacity>
+        </View>
       </Screen>
     </SafeAreaView>
   );
@@ -58,6 +80,20 @@ const styles = StyleSheet.create({
   },
   content: {
     marginVertical: 0,
+  },
+  footer: {
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  loadMoreBtn: {
+    padding: 10,
+    backgroundColor: "grey",
+    borderRadius: 4,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -11,6 +11,7 @@ import QuestionForm from "../forms/QuestionForm";
 import { TouchableWithoutFeedback, StyleSheet, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import UserProfile from "../UserProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +26,7 @@ const Navigation = ({ handleLogin, handleLogout, isLoggedIn }) => {
         headerTintColor: "navy",
       }}
     >
-      <Stack.Screen name="Hekani">
+      <Stack.Screen options={{ headerShown: false }} name="Hekani">
         {() => (
           <Home
             handleLogin={handleLogin}
@@ -41,6 +42,7 @@ const Navigation = ({ handleLogin, handleLogout, isLoggedIn }) => {
       <Stack.Screen name="QuestionCategories" component={QuestionCategories} />
       <Stack.Screen name="ArticleCategories" component={ArticleCategories} />
       <Stack.Screen name="Account" component={Account} />
+      <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );
 };

@@ -1,27 +1,28 @@
-import React from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
-import FlatCard from '../cards/FlatCard'
-import Title from '../Title'
-import { useNavigation } from '@react-navigation/native'
+import React from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import FlatCard from "../cards/FlatCard";
+import { useNavigation } from "@react-navigation/native";
 
-const VerticalList = ({title, data}) => {
-    const navigation = useNavigation();
-    return (
-        <>
-            <Title size={20}>
-                {title}
-            </Title>
-            <View style={styles.container}>
-                {data.map((item) => <FlatCard onPress={() => navigation.navigate('Article', {item})} item={item} key={item.id} keyExtractor={(item) => item.toString()} />)}
-            </View>
-        </>
-    )
-}
+const VerticalList = ({ data }) => {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.container}>
+      {data.map((item) => (
+        <FlatCard
+          onPress={() => navigation.navigate("Article", { item })}
+          item={item}
+          key={item.id}
+          keyExtractor={(item) => item.toString()}
+        />
+      ))}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        marginVertical: 15,
-    }
-})
+  container: {
+    marginVertical: 0,
+  },
+});
 
-export default VerticalList
+export default VerticalList;
