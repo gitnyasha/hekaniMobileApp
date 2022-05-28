@@ -51,7 +51,9 @@ const Question = ({ route }) => {
     <>
       <ScrollView style={styles.container}>
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>{myquestion.question.title}</Text>
+          <View style={styles.questionContainer}>
+            <Text style={styles.title}>{myquestion.question.title}</Text>
+          </View>
           <Text style={styles.title}>Answers</Text>
           <View style={styles.contentContainer}>
             {myquestion.answers.map((item) => (
@@ -111,6 +113,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: 5,
     backgroundColor: "#dff9fb",
+  },
+  questionContainer: {
+    padding: 5,
+    backgroundColor: "#fff",
   },
   title: {
     fontSize: 20,

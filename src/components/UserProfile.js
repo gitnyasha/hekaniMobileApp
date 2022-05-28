@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import UserApi from "../api/UserApi";
@@ -34,7 +35,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     currentUser();
-  }, [user]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -50,26 +51,21 @@ const UserProfile = () => {
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
             <Image
-              source={require("../../assets/me.jpg")}
+              source={{ uri: user.image }}
               style={styles.image}
               resizeMode="center"
             ></Image>
           </View>
-          <View style={styles.dm}>
-            <MaterialIcons
-              name="chat"
-              size={18}
-              color="#DFD8C8"
-            ></MaterialIcons>
-          </View>
           <View style={styles.active}></View>
           <View style={styles.add}>
-            <Ionicons
-              name="ios-add"
-              size={48}
-              color="#DFD8C8"
-              style={{ marginTop: 6, marginLeft: 2 }}
-            ></Ionicons>
+            <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+              <Ionicons
+                name="ios-add"
+                size={48}
+                color="#DFD8C8"
+                style={{ marginTop: 6, marginLeft: 2 }}
+              ></Ionicons>
+            </TouchableOpacity>
           </View>
         </View>
 

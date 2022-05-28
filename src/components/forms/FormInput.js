@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     width: "100%",
     color: "#222",
     borderBottomColor: "#aaa",
-    borderBottomWidth: 1,
   },
 });
 

@@ -8,6 +8,8 @@ import {
   ScrollView,
   Dimensions,
   KeyboardAvoidingView,
+  Modal,
+  Pressable,
 } from "react-native";
 import AnswerApi from "../api/AnswerApi";
 import ActivityIndicator from "./extras/ActivityIndicator";
@@ -26,6 +28,8 @@ const Answer = ({ route }) => {
   const [post, setPost] = useState([]);
   const { id: id } = route.params.item;
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [comment, setComment] = useState({
     title: "",
   });
@@ -123,7 +127,7 @@ const Answer = ({ route }) => {
 
   return (
     <>
-      <ScrollView style={styles.container}>
+      <ScrollView>
         <View style={styles.contentContainer}>
           <View style={styles.content}>
             <View style={styles.profileImage}>
@@ -139,7 +143,10 @@ const Answer = ({ route }) => {
             </View>
             <Text style={styles.title}>{post.question}?</Text>
             {/* add body for rich text */}
-            <HTMLView value={post.answer} stylesheet={styles.description} />
+            <HTMLView
+              value={post.answer.body}
+              stylesheet={styles.description}
+            />
             <Text style={styles.btm}>
               <Text style={styles.btmFields}>
                 <FontAwesome5
@@ -201,35 +208,65 @@ const Answer = ({ route }) => {
           </View>
         </View>
       </ScrollView>
-      <View style={styles.textbox}>
-        <FormContainer>
-          <View style={{ flexDirection: "row" }}>
-            <View style={styles.inputContainer}>
-              <FormInput
-                style={{ justifyContent: "flex-start" }}
-                value={title}
-                onChangeText={(value) => handleOnChangeText(value, "title")}
-                autoCapitalize="none"
-                placeholder="Comment..."
-              />
-            </View>
-            <View style={styles.btnContainer}>
-              <TouchableOpacity
-                style={{ justifyContent: "flex-end" }}
-                onPress={submitForm}
-              >
-                <Text style={{ fontSize: 16, color: "#fff" }}>
-                  <FontAwesome
-                    style={styles.icons}
-                    name="send"
-                    size={18}
-                    color="#fff"
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <ScrollView>
+          <View style={styles.centeredView}>
+            <Pressable
+              style={[styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Close</Text>
+            </Pressable>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              style={styles.keyboard}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <View style={styles.inputContainer}>
+                  <FormInput
+                    style={{ justifyContent: "flex-start" }}
+                    value={title}
+                    onChangeText={(value) => handleOnChangeText(value, "title")}
+                    autoCapitalize="none"
+                    placeholder="Comment..."
                   />
-                </Text>
-              </TouchableOpacity>
-            </View>
+                </View>
+                <View style={styles.btnContainer}>
+                  <TouchableOpacity
+                    style={{ justifyContent: "flex-end" }}
+                    onPress={submitForm}
+                  >
+                    <Text style={{ fontSize: 16, color: "#fff" }}>
+                      <FontAwesome
+                        style={styles.icons}
+                        name="send"
+                        size={18}
+                        color="#fff"
+                      />
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
           </View>
-        </FormContainer>
+        </ScrollView>
+      </Modal>
+
+      <View style={{ position: "absolute", ...styles.button }}>
+        <Pressable
+          style={[styles.buttonOpen]}
+          onPress={() => setModalVisible(true)}
+        >
+          <FontAwesome5 name="plus" size={30} color="#fff" />
+        </Pressable>
       </View>
     </>
   );
@@ -238,9 +275,12 @@ const Answer = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
-
+  keyboard: {
+    flex: 1,
+    backgroundColor: "#fff",
+    marginBottom: 60,
+  },
   textInput: {
     color: "#aaa",
   },
@@ -306,7 +346,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 5,
-    marginBottom: 60,
   },
   comment: {
     padding: 5,
@@ -314,22 +353,71 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   icons: {
-    fontSize: 28,
+    fontSize: 20,
     marginLeft: 15,
   },
   textbox: {
     width: "100%",
-    height: 55,
     backgroundColor: "#fff",
     justifyContent: "center",
     bottom: 0,
     elevation: 5,
-    position: "absolute",
     flex: 1,
   },
   voteBtn: {
     marginBottom: -10,
     paddingLeft: 15,
+  },
+  button: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#0080ff",
+    justifyContent: "center",
+    alignItems: "center",
+    bottom: 20,
+    right: 20,
+    elevation: 5,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    marginTop: 22,
+    backgroundColor: "#fff",
+    height: height,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  buttonOpen: {
+    backgroundColor: "#2196F3",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
 

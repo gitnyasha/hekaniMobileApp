@@ -22,6 +22,7 @@ const AnswerCard = ({ item, onPress }) => {
     relationship,
     author_id,
     bio,
+    propic,
     comments,
     votes,
     created,
@@ -84,7 +85,7 @@ const AnswerCard = ({ item, onPress }) => {
         <View style={styles.content}>
           <View style={styles.profileImage}>
             <Image
-              source={require("../../../assets/me.jpg")}
+              source={{ uri: propic }}
               style={styles.image}
               resizeMode="center"
             ></Image>
@@ -120,7 +121,7 @@ const AnswerCard = ({ item, onPress }) => {
           </View>
           <Text style={styles.title}>{question}?</Text>
           {/* add body for rich text */}
-          <HTMLView value={answer} stylesheet={styles.description} />
+          <HTMLView value={answer.body} stylesheet={styles.description} />
           <Text style={styles.btm}>
             <Text style={styles.btmFields}>
               <FontAwesome5

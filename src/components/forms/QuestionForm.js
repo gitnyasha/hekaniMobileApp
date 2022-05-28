@@ -68,6 +68,7 @@ const QuestionForm = () => {
           Alert.alert(response.data.status);
           navigation.navigate("Questions");
           setQuestion({ title: "" });
+          console.log(response);
         }
       })
       .catch((error) => {

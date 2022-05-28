@@ -8,10 +8,10 @@ import QuestionCategories from "../QuestionCategories";
 import ArticleCategories from "../ArticleCategories";
 import Account from "../Account";
 import QuestionForm from "../forms/QuestionForm";
-import { TouchableWithoutFeedback, StyleSheet, Dimensions } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import UserProfile from "../UserProfile";
+import AddCamera from "../AddCamera";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,10 +39,11 @@ const Navigation = ({ handleLogin, handleLogout, isLoggedIn }) => {
       <Stack.Screen name="Question" component={Question} />
       <Stack.Screen name="Answer" component={Answer} />
       <Stack.Screen name="QuestionForm" component={QuestionForm} />
-      <Stack.Screen name="QuestionCategories" component={QuestionCategories} />
-      <Stack.Screen name="ArticleCategories" component={ArticleCategories} />
+      <Stack.Screen name="Question Categories" component={QuestionCategories} />
+      <Stack.Screen name="Article Categories" component={ArticleCategories} />
       <Stack.Screen name="Account" component={Account} />
-      <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="Profile" component={UserProfile} />
+      <Stack.Screen name="Camera" component={AddCamera} />
     </Stack.Navigator>
   );
 };
