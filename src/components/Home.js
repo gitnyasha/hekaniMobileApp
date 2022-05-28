@@ -67,7 +67,13 @@ const Home = ({ handleLogout }) => {
             "https://user-images.githubusercontent.com/45620987/136694624-3c9f9b2d-dc9d-418c-b522-15be6d2eea4b.jpg",
         }}
       /> */}
-        <Articles data={articles} />
+        {articles.length > 0 ? (
+          <Articles data={articles} />
+        ) : (
+          <Text style={styles.text}>
+            No articles go to settings and follow article topics
+          </Text>
+        )}
         <RefreshControl isLoading={isLoading} onRefresh={fetchArticles} />
         <View style={styles.footer}>
           <TouchableOpacity
@@ -103,6 +109,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  text: {
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 20,
   },
 });
 

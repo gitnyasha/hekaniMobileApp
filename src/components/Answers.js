@@ -46,15 +46,21 @@ const Answers = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Screen>
-        <View style={styles.content}>
-          {answers.map((item) => (
-            <AnswerCard
-              onPress={() => navigation.navigate("Answer", { item })}
-              item={item}
-              key={item.id}
-            />
-          ))}
-        </View>
+        {answers.length > 0 ? (
+          <View style={styles.content}>
+            {answers.map((item) => (
+              <AnswerCard
+                onPress={() => navigation.navigate("Answer", { item })}
+                item={item}
+                key={item.id}
+              />
+            ))}
+          </View>
+        ) : (
+          <Text style={styles.text}>
+            No posts go to settings and follow question topics
+          </Text>
+        )}
         <RefreshControl isLoading={isLoading} onRefresh={fetchAnswers} />
 
         <View style={styles.footer}>
@@ -94,6 +100,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  text: {
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 20,
   },
 });
 
