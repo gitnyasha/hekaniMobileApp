@@ -19,7 +19,7 @@ const Questions = () => {
   const navigation = useNavigation();
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [offset, setOffset] = useState(1);
+  const [offset, setOffset] = useState(0);
 
   const fetchQuestions = async () => {
     try {

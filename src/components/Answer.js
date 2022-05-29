@@ -123,19 +123,13 @@ const Answer = ({ route }) => {
     );
   }
 
-  console.log(post);
-
   return (
     <>
       <ScrollView>
         <View style={styles.contentContainer}>
           <View style={styles.content}>
             <View style={styles.profileImage}>
-              <Image
-                source={require("../../assets/me.jpg")}
-                style={styles.image}
-                resizeMode="center"
-              ></Image>
+              <Image source={{ uri: post.propic }}></Image>
               <View style={styles.author}>
                 <Text style={{ fontWeight: "bold" }}>{post.author}</Text>
                 <Text style={{ color: "#aaa", fontSize: 11 }}>{post.bio}</Text>
@@ -188,11 +182,7 @@ const Answer = ({ route }) => {
             {comments.map((comment) => (
               <View style={styles.comment} key={comment.id}>
                 <View style={styles.profileImage}>
-                  <Image
-                    source={require("../../assets/me.jpg")}
-                    style={styles.image}
-                    resizeMode="center"
-                  ></Image>
+                  <Image source={{ uri: comment.propic }}></Image>
                   <View style={styles.author}>
                     <Text style={{ fontWeight: "bold" }}>{comment.user}</Text>
                     <Text style={{ color: "#aaa", fontSize: 11 }}>

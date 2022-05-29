@@ -102,7 +102,6 @@ export default function App() {
             })}
           >
             <Tab.Screen name="Home" component={Navigation} />
-            <Tab.Screen name="Q&A" component={Answers} />
             <Tab.Screen name="Profile" component={UserProfile} />
             <Tab.Screen name="Questions" component={Questions} />
             <Tab.Screen name="Settings">

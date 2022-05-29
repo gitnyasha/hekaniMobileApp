@@ -10,28 +10,33 @@ import Screen from "./Screen";
 import articlesApi from "../api/articlesApi";
 import Articles from "./Articles";
 import Featured from "./Featured";
+import { useNavigation } from "@react-navigation/native";
 import ActivityIndicator from "./extras/ActivityIndicator";
 import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AnswerCard from "./cards/AnswerCard";
+import AnswerApi from "../api/AnswerApi";
 
 const Home = ({ handleLogout }) => {
-  const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [offset, setOffset] = useState(1);
+  const navigation = useNavigation();
 
-  const fetchArticles = async () => {
+  const [answers, setAnswers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [offset, setOffset] = useState(0);
+
+  const fetchAnswers = async () => {
     try {
-      const myArticles = await articlesApi.getArticles(offset);
-      setArticles([...articles, ...myArticles]);
+      const myAnswers = await AnswerApi.getAnswers(offset);
+      setAnswers([...answers, ...myAnswers]);
       setIsLoading(false);
-      setOffset(offset + 5);
+      setOffset(offset + 10);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchArticles();
+    fetchAnswers();
   }, []);
 
   handleLogoutButton = () => {
@@ -58,27 +63,27 @@ const Home = ({ handleLogout }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Screen>
-        {/* <Featured
-        title="Featured"
-        item={{
-          title: "React Native",
-          body: "A framework for building native apps using React",
-          image:
-            "https://user-images.githubusercontent.com/45620987/136694624-3c9f9b2d-dc9d-418c-b522-15be6d2eea4b.jpg",
-        }}
-      /> */}
-        {articles.length > 0 ? (
-          <Articles data={articles} />
+        {answers.length > 0 ? (
+          <View style={styles.content}>
+            {answers.map((item) => (
+              <AnswerCard
+                onPress={() => navigation.navigate("Answer", { item })}
+                item={item}
+                key={item.id}
+              />
+            ))}
+          </View>
         ) : (
           <Text style={styles.text}>
-            No articles go to settings and follow article topics
+            No posts go to settings and follow question topics
           </Text>
         )}
-        <RefreshControl isLoading={isLoading} onRefresh={fetchArticles} />
+        <RefreshControl isLoading={isLoading} onRefresh={fetchAnswers} />
+
         <View style={styles.footer}>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={fetchArticles}
+            onPress={fetchAnswers}
             //On Click of button calling getData function to load more data
             style={styles.loadMoreBtn}
           >
@@ -95,6 +100,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
+  },
+  content: {
+    marginVertical: 0,
   },
   footer: {
     padding: 10,

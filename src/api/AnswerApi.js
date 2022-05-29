@@ -2,7 +2,7 @@ import server from "./server";
 
 const getAnswers = async (offset) => {
   try {
-    const response = await server.get(`/answers?offset=${offset}&limit=${5}`);
+    const response = await server.get(`/answers?offset=${offset}&limit=${10}`);
 
     if (response.data) {
       return response.data;

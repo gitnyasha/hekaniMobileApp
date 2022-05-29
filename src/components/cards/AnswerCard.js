@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -13,8 +13,27 @@ import HTMLView from "react-native-htmlview";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Moment from "moment";
 import axios from "axios";
+import UserApi from "../../api/UserApi";
+import ActivityIndicator from "../extras/ActivityIndicator";
 
 const AnswerCard = ({ item, onPress }) => {
+  const [user, setUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const currentUser = async () => {
+    try {
+      const getUser = await UserApi.getCurrentUser();
+      setUser(getUser);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    currentUser();
+  }, []);
+
   const {
     answer,
     question,
@@ -79,6 +98,14 @@ const AnswerCard = ({ item, onPress }) => {
     });
   };
 
+  if (isLoading) {
+    return (
+      <View>
+        <ActivityIndicator visible={true} />
+      </View>
+    );
+  }
+
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
@@ -94,28 +121,36 @@ const AnswerCard = ({ item, onPress }) => {
               <Text style={{ color: "#aaa", fontSize: 11 }}>{bio}</Text>
             </View>
             <View style={styles.rightside}>
-              {relationship === "follow" ? (
-                <Text>
-                  <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : null}
-                    enabled
-                  >
-                    <Pressable style={styles.button} onPress={followUser}>
-                      <Text style={{ color: "navy" }}>Follow</Text>
-                    </Pressable>
-                  </KeyboardAvoidingView>{" "}
-                </Text>
+              {user.id !== author_id ? (
+                <View>
+                  {relationship === "follow" ? (
+                    <Text>
+                      <KeyboardAvoidingView
+                        behavior={Platform.OS === "ios" ? "padding" : null}
+                        enabled
+                      >
+                        <Pressable style={styles.button} onPress={followUser}>
+                          <Text style={{ color: "navy" }}>Follow</Text>
+                        </Pressable>
+                      </KeyboardAvoidingView>{" "}
+                    </Text>
+                  ) : (
+                    <Text>
+                      <KeyboardAvoidingView
+                        behavior={Platform.OS === "ios" ? "padding" : null}
+                        enabled
+                      >
+                        <Pressable style={styles.button} onPress={unfollowUser}>
+                          <Text style={{ color: "red" }}>Unfollow</Text>
+                        </Pressable>
+                      </KeyboardAvoidingView>{" "}
+                    </Text>
+                  )}
+                </View>
               ) : (
-                <Text>
-                  <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : null}
-                    enabled
-                  >
-                    <Pressable style={styles.button} onPress={unfollowUser}>
-                      <Text style={{ color: "red" }}>Unfollow</Text>
-                    </Pressable>
-                  </KeyboardAvoidingView>{" "}
-                </Text>
+                <View>
+                  <Text>{}</Text>
+                </View>
               )}
             </View>
           </View>

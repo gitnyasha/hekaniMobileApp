@@ -26,13 +26,13 @@ const Settings = ({ handleLogout }) => {
           <Text style={styles.text}>Account</Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
+      {/* <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Article Categories")}
       >
         <View style={styles.card}>
           <Text style={styles.text}>Article Topics</Text>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback> */}
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("Question Categories")}
       >

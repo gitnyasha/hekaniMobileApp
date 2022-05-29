@@ -20,11 +20,8 @@ const QuestionCategories = () => {
   };
 
   useEffect(() => {
-    let cleanUp = false;
+    // cancel all subscriptions when the component unmounts
     fetchQuestionCategories();
-    return () => {
-      cleanUp = true;
-    };
   }, [questionCategories]);
 
   if (isLoading) {

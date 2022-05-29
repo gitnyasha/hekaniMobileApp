@@ -79,12 +79,12 @@ const UserProfile = () => {
         </View>
 
         <View style={styles.statsContainer}>
-          <View style={styles.statsBox}>
+          {/* <View style={styles.statsBox}>
             <Text style={[styles.text, { fontSize: 24 }]}>
               {user.number_of_feeds}
             </Text>
             <Text style={[styles.text, styles.subText]}>Posts</Text>
-          </View>
+          </View> */}
           <View
             style={[
               styles.statsBox,
