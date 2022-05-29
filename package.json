@@ -1,9 +1,8 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest"
@@ -54,7 +53,9 @@
     "react-navigation-drawer": "^2.7.1",
     "react-navigation-tabs": "^2.11.1",
     "react-redux": "^7.2.6",
-    "redux": "^4.1.1"
+    "redux": "^4.1.1",
+    "expo-updates": "~0.11.7",
+    "expo-splash-screen": "~0.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -65,5 +66,7 @@
     "jest-expo": "^44.0.1",
     "react-test-renderer": "^17.0.1"
   },
-  "private": true
+  "private": true,
+  "name": "hekani",
+  "version": "1.0.0"
 }

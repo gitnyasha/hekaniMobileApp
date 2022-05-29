@@ -13,14 +13,11 @@ import {
 } from "react-native";
 import AnswerApi from "../api/AnswerApi";
 import ActivityIndicator from "./extras/ActivityIndicator";
-import VotesForm from "./forms/VotesForm";
 import HTMLView from "react-native-htmlview";
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import Moment from "moment";
 import server from "../api/server";
-import FormContainer from "./forms/FormContainer";
 import FormInput from "./forms/FormInput";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width, height } = Dimensions.get("window");
 
@@ -163,7 +160,7 @@ const Answer = ({ route }) => {
                     size={28}
                     color="#aaa"
                   />
-                </KeyboardAvoidingView>{" "}
+                </KeyboardAvoidingView>
                 {votes}
               </Text>
               <Text style={styles.btmFields}>
@@ -230,7 +227,7 @@ const Answer = ({ route }) => {
                   />
                 </View>
                 <View style={styles.btnContainer}>
-                  <TouchableOpacity
+                  <Pressable
                     style={{ justifyContent: "flex-end" }}
                     onPress={submitForm}
                   >
@@ -242,7 +239,7 @@ const Answer = ({ route }) => {
                         color="#fff"
                       />
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 </View>
               </View>
             </KeyboardAvoidingView>
